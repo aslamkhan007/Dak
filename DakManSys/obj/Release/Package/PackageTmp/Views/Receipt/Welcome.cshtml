@@ -1,0 +1,1089 @@
+﻿@model DakManSys.ViewModel.ParentViewModel
+@{
+    ViewBag.Title = "Welcome";
+}
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery-ui-1.10.2.js"></script>
+@*<script src="~/Scripts/jquery-ui-1.9.2.js"></script>*@
+<link href="~/Content/jQuery%20UI-1.10.3.css" rel="stylesheet" />
+<script src="~/Scripts/jtable/jquery.jtable.js"></script>
+<link href="~/Scripts/jtable/themes/lightcolor/green/jtable.css" rel="stylesheet" />
+
+<style>
+    div.jtable-main-container div.jtable-bottom-panel .jtable-page-list .jtable-page-number-active, div.jtable-main-container div.jtable-bottom-panel .jtable-page-list .jtable-page-number-active:hover {
+        background-color: rgb(180,0,0) !important;
+        border-color: rgb(180,0,0) !important;
+    }
+
+
+
+    #txtAddress2 {
+        margin-top: 14%;
+    }
+
+    #txtAddress3 {
+        margin-top: 14%;
+    }
+
+    #Textarea {
+        width: 100% !important;
+    }
+
+        #Textarea.error {
+            border: 1px solid #b94a48;
+        }
+
+    #ui-id-1 {
+        height: 30% !important;
+        overflow: scroll !important;
+    }
+
+    #ui-id-2 {
+        height: 30% !important;
+        overflow: scroll !important;
+    } 
+    div#spinner {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0%;
+        text-align: center;
+        z-index: 100;
+        overflow: auto;
+    }
+</style>
+
+
+<script>
+    $(document).ready(function () {
+       
+        $("#SenderType").hide().css("display:none");
+        $("#hdnRadioValue").val("A");
+        $("#accordion").hide().css("display:none");
+        $('input:radio').change(function () {
+            $("#hdnRadioValue").val($(this).val());
+            $("#SenderType").hide().css("display:none");
+        });
+
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+
+        $("#ConcernedPersonals").autocomplete({
+            source: function (request, response) {
+                var party = [];
+                var parties = {};
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: "POST",
+                    minLength: 3,
+                    url: '/Receipt/getEmployeeMail',
+                    data: { term: extractLast(request.term), dept: $("#ddlHod option:selected").val() },
+                    success: function (data) {
+
+                        for (var i = 0; i < data.length ; i++) {
+                            party[i] = { label: data[i].Value, Id: data[i].Key };
+
+                        }
+
+                    }
+                });
+                response(party);
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            select: function (event, ui) {
+
+
+
+                var terms = split(this.value);
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.Id);
+                // add placeholder to get the comma-and-space at the end
+                terms.push("");
+                this.value = terms.join(", ");
+
+                // $("#project-id").val(ui.item.key);
+
+                return false;
+            }
+        });
+
+
+
+        $("#SenderName").keypress(function () {
+
+            if ($("#SenderName").val().length > 2) {
+
+                $("#SenderName").autocomplete({
+                    source: function (request, response) {
+                        var party = new Array();
+                        $.ajax({
+                            async: false,
+                            cache: false,
+                            type: "POST",
+                            minLength: 3,
+                            url: '/Receipt/PartyAutocomplete',
+                            data: { term: request.term, flag: $("#hdnRadioValue").val() },
+                            success: function (data) {
+                                for (var i = 0; i < data.length ; i++) {
+                                    party[i] = { label: data[i].Value, Id: data[i].Key };
+                                }
+                            }
+                        });
+                        response(party);
+                    },
+                    select: function (event, ui) {
+                        if ($("#hdnRadioValue").val() == "A") {
+                            $("#SenderType").show();
+                            $.ajax({
+                                url: '/Receipt/PartyType',
+                                type: 'POST',
+                                dataType: 'json',
+                                data: { partycode: ui.item.Id, partyname: ui.item.value },
+                                success: function (result) {
+
+                                    if (result == "C") {
+                                        $('#SenderType').html("Customer");
+                                        $('#partytype').val(result);
+                                    }
+                                    else if (result == "S") {
+                                        $('#SenderType').html("Vendor");
+                                        $('#partytype').val(result);
+                                    }
+
+                                    else {
+                                        $('#SenderType').html("Others");
+                                        $('#partytype').val(result);
+                                    }
+                                }
+                            });
+                        }
+                        else {
+                            if ($("#hdnRadioValue").val() == "C") {
+                                $('#partytype').val("C");
+                            }
+                            else if ($("#hdnRadioValue").val() == "S")
+                            {
+                                $('#partytype').val("S");
+                            }
+                            else
+                            {
+                                $('#partytype').val("O");
+                            }
+                        }
+                        $("#accordion").show();
+                        $("#Gridshow").jtable({
+                            title: 'test',
+                            cache:false,
+                            paging: true,
+                            selecting: true, //Enable selecting
+                            selectingCheckboxes: true, //Show checkboxes on first column
+                            multiselect: false,
+                            //selectOnRowClick: false, //Enable this to only select using checkboxes
+                            actions: {
+                                listAction: '/Receipt/PartyDetails',
+                                createAction:''
+                            },
+                            toolbar: {
+                                items: [{
+                                    icon: '/images/pdf.png',
+                                    text: 'Add New Address',
+                                    click: function () {
+                                        //perform your custom job...
+                                        $("div.jtable-main-container table.jtable tbody").append("<tr><td><a href='' id='btnSave'>Save</a></td><td><input type='text' name='txtaddress1'></td><td><input type='text' name='txtaddress2'></td><td><input type='text' name='txtaddress3'></td><td><input type='text' name='txtcity'></td><td><input type='text' name='txtstate'></td><td><input type='text' name='txtcountry'></td><td><input type='text' name='txtzip'></td><td><input type='text' name='txtphone'></td><td><input type='text' name='txttelex'></td><td><input type='text' name='txtfax'></td><td><input type='text' name='txtemail'></td></tr>").css("div.jtable-main-container table.jtable tbody > tr.jtable-row-even");
+                                        $("#btnSave").click(function (event) {
+                                            event.preventDefault();
+                                            //alert("save firing");
+                                            //alert($("div.jtable-main-container table.jtable tbody >tr").last().find("input[name=txtaddress1]").val());
+
+
+                                            dataObj = {};
+                                            //alert($("div.jtable-main-container table.jtable tbody >tr").last().find("input[type='text']").serialize());
+                                            var dataArray = $("div.jtable-main-container table.jtable tbody >tr").last().find("input[type='text']").each(function (index) {
+                                                dataObj[$(this).attr('name')] = $(this).val();
+                                            });
+                                            var data = {};
+                                            data.txtaddress1 = (dataObj['txtaddress1'] === "") ? "-" : dataObj['txtaddress1'];
+                                            data.txtaddress2 = (dataObj['txtaddress2'] === "") ? "-" : dataObj['txtaddress2'];
+                                            data.txtaddress3 = (dataObj['txtaddress3'] === "") ? "-" : dataObj['txtaddress3'];
+                                            data.txtcity = (dataObj['txtcity'] === "") ? "-" : dataObj['txtcity'];
+                                            data.txtstate = (dataObj['txtstate']=== "") ? "-" : dataObj['txtstate'];
+                                            data.txtcountry = (dataObj['txtcountry'] === "") ? "-" : dataObj['txtcountry'];
+                                            data.txtphone = (dataObj['txtphone'] === "") ? "-" : dataObj['txtphone'];
+                                            data.txttelex = (dataObj['txttelex'] === "") ? "-" : dataObj['txttelex'];
+                                            data.txtfax = (dataObj['txtfax'] === "") ? "-" : dataObj['txtfax'];
+                                            data.txtemail = (dataObj['txtemail'] === "") ? "-" : dataObj['txtemail'];
+                                            data.txtzip = (dataObj['txtzip'] === "") ? "-" : dataObj['txtzip'];
+                                            
+
+                                          //  var newdata = JSON.stringify(data);
+                                            $.ajax({
+                                                url: '/Receipt/NewPartyAddress',
+                                                type: 'POST',
+                                                dataType: 'json',
+                                                data: { NewAddress: JSON.stringify(data), PartyCode: ui.item.Id,PartyType: $('#partytype').val() },
+                                                success: function (result) {
+                                                    if(result !="New Address Not Added")
+                                                    {
+                                                        alert(result);
+                                                        $('#Gridshow').jtable('reload', { partycode: ui.item.Id });
+                                                    }
+                                                    else
+                                                    {
+                                                        alert(result);
+                                                        $('#Gridshow').jtable('reload', { partycode: ui.item.Id });
+                                                    }
+                                                }
+
+                                            });
+
+                                        });
+
+                                    }
+                                }]
+                            },
+
+                            fields: {
+                                address_id: {
+                                    key: true,
+                                    create: false,
+                                    edit: false,
+                                    list: false
+                                },
+                                Address_Line_1: {
+                                    title: 'Address1',
+                                    width: '23%'
+                                },
+                                Address_Line_2: {
+                                    title: 'Address2',
+                                    width: '12%'
+                                },
+                                Address_Line_3: {
+                                    title: 'Address3',
+                                    width: '12%'
+                                },
+                                City: {
+                                    title: 'City',
+                                    width: '13%'
+                                },
+                                State: {
+                                    title: 'State',
+                                    width: '12%'
+                                },
+                                Country: {
+                                    title: 'Country',
+                                    width: '15%'
+                                },
+                                Zip_No: {
+                                    title: 'Zip_No',
+                                    width: '12%'
+                                },
+                                Phone_No: {
+                                    title: 'Phone_No',
+                                    width: '12%'
+                                },
+                                Telex_No: {
+                                    title: 'Telex_No',
+                                    width: '12%'
+                                },
+                                Fax_No: {
+                                    title: 'Fax_No',
+                                    width: '15%'
+                                },
+                                Email: {
+                                    title: "Email",
+                                    width: "15%"
+                                }
+                            },
+                            //Register to selectionChanged event to hanlde events
+                            selectionChanged: function () {
+                                //Get all selected rows
+                                var $selectedRows = $('#Gridshow').jtable('selectedRows');
+                                if ($selectedRows.length > 0) {
+                                    var record = $selectedRows.data('record');
+                                    $("#address_id").val(record.address_id);
+                                    $("#txtAddress1").val(record.Address_Line_1);
+                                    $("#txtAddress2").val(record.Address_Line_2);
+                                    $("#txtAddress3").val(record.Address_Line_3);
+                                    $("#txtCountry").val(record.Country);
+                                    $("#txtState").val(record.State);
+                                    $("#txtCity").val(record.City);
+                                    $("#txtZip").val(record.Zip_No);
+                                    $("#txtPhone").val(record.Phone_No);
+                                    $("#txtTelex").val(record.Telex_No);
+                                    $("#txtFax").val(record.Fax_No);
+                                    $("#txtEmail").val(record.Email);
+                                    $("#hdnPartyCode").val(record.Party_Code)
+                                    $(".collapse").collapse('hide');
+                                    $(".collapse").on('hidden.bs.collapse', function () {
+
+                                    });
+                                }
+
+                            }
+                        });
+
+                        //Load student list from server
+                        $('#Gridshow').jtable('load', { partycode: ui.item.Id });
+
+                    }
+                });
+
+            }
+        });
+        $("#Popup").click(function (event) {
+            $('#SenderDetails')[0].reset();
+            $("#PartyName").val("");
+            $("#Address").val("");
+            $("#Jct_Dak_Party_Detail_Address_Address_Line_2").val("");
+            $("#Jct_Dak_Party_Detail_Address_Address_Line_3").val("");
+            $("#ddlcountry").val("India");
+            $("#ddlstate").val("");
+            $("#ddlcity").val("");
+            $("#Jct_Dak_Party_Detail_Address_Email").val("");
+            $("#Jct_Dak_Party_Detail_Address_Phone_No").val("");
+            $("#Jct_Dak_Party_Detail_Address_Telex_No").val("");
+            $("#Jct_Dak_Party_Header_Remarks").val("");
+            $("#Jct_Dak_Party_Detail_Address_Zip_No").val("");
+            $("#Jct_Dak_Party_Header_Reference_Employee").val("");
+            $("#Jct_Dak_Party_Header_Ex_Employee").val("");
+
+
+            $(this).attr('data-target', '#myModal');
+        });
+        $("#cheque").hide().css("display:none");
+        $("#date").datepicker({
+            maxDate: 'now',
+            autoclose: true
+        });
+
+        $("#DakType").change(function () {
+            $("#Dak_Type").val($("#DakType option:selected").text());
+            if ($(this).val() == "CHQ") {
+                $("#cheque").show();
+            }
+            else {
+                $("#cheque").hide().css("display:none");
+            }
+
+        });
+
+
+        $("#MailMode").change(function () {
+            $("#DakMode").val($("#MailMode option:selected").text());
+                $.ajax({
+                    url: '/Receipt/ServiceModeBind',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { MailMode: $(this).val() },
+                    success: function (result) {
+                        $('#MailService').empty();
+                        $("#MailService").append($("<option>Select DAK Service</option>"));
+                        for (var i = 0 ; i < result.length; i++) {
+                            $("#MailService").append($("<option></option>").val(result[i].Value).html(result[i].Text));
+                        }
+                    }
+                });
+        });
+
+        $("#ddlHod").change(function () {
+            $("#Mail").val("");
+            $("#Phone").val("");
+            $("#HodCode").val($("#ddlHod").val());
+            if ($("#ddlHod").val() !== "0") {
+                $.ajax({
+                    url: '/Receipt/HodDetails',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { Hod: $("#ddlHod").val() },
+                    success: function (result) {
+                        $("#Mail").val(result.E_MailID);
+                        $("#Phone").val(result.Mobile);
+                        $("#MailValue").val(result.E_MailID);
+                        $("#PhoneValue").val(result.Mobile);
+                    }
+
+                });
+            }
+
+        });
+
+        //For department Dropdownlist
+        $("#ddlDept").change(function () {
+
+            $("#deptname").val($("#ddlDept option:selected").text());
+
+            $.ajax({
+                url: '/Receipt/fetchHod',
+                type: 'POST',
+                dataType: 'json',
+                data: { dept: $(this).val() },
+                success: function (result) {
+
+                    if (result.length > 1) {
+                        $("#ddlHod").empty();
+                        $("#ddlHod").prop("disabled", false);
+                        $("#ddlHod").append($('<option></option>').html("Select  Name").val(""));
+                        $.each(result, function () {
+                            $("#ddlHod").append($('<option></option>').val(this['Hod_Code']).html(this['Hod_Name']));
+                        });
+                    }
+                    else {
+                        $("#ddlHod").prop("disabled", false);
+                        $("#ddlHod").empty();
+                        $("#Mail").val("");
+                        $("#Phone").val("");
+                        $("#ddlHod").append($('<option></option>').val(result[0]['Hod_Code']).html(result[0]['Hod_Name']));
+                        $("#HodCode").val($("#ddlHod").val());
+
+                        if ($("#ddlHod").val() !== null) {
+                            $.ajax({
+                                url: '/Receipt/HodDetails',
+                                type: 'POST',
+                                dataType: 'json',
+                                data: { Hod: $("#ddlHod").val() },
+                                success: function (result) {
+                                    $("#Mail").val(result.E_MailID);
+                                    $("#Phone").val(result.Mobile);
+                                    $("#MailValue").val(result.E_MailID);
+                                    $("#PhoneValue").val(result.Mobile);
+                                }
+
+                            });
+                        }
+                    }
+                }
+            });
+        });
+
+
+        //for New Sender Page.........................................//
+        $("#txtcity").hide();
+        $("#txtstate").hide();
+        $("#ddlcountry").change(function () {
+            if ($(this).val() != "India") {
+                $("#ddlcity").hide();
+                $("#ddlstate").hide();
+                $("#txtcity").show();
+                $("#txtstate").show();
+            }
+            else {
+                $("#txtcity").hide();
+                $("#txtstate").hide();
+                $("#ddlcity").show();
+                $("#ddlstate").show();
+            }
+        });
+
+
+        $("#ddlstate").change(function () {
+
+            $.ajax({
+                url: '/Receipt/ConditionalCityList',
+                type: 'POST',
+                dataType: 'json',
+                data: { State: $(this).val() },
+                success: function (result) {
+                    $('#ddlcity').empty();
+                    $("#ddlcity").append("<option>Select City</option>");
+                    for (var i = 0 ; i < result.length; i++) {
+                        $("#ddlcity").append($("<option></option>").val(result[i].Text).html(result[i].Text));
+                    }
+                    $("#ddlcity").append("<option value='Other'>Others</option>");
+
+
+                    if ($("#ddlcity option:selected").val() == "Other") {
+
+                        $("#ddlcity").hide();
+                        $("#txtcity").show();
+                    }
+                    else {
+
+                        $("#ddlcity").show();
+                        $("#txtcity").hide();
+                    }
+
+
+
+
+                }
+            });
+        });
+
+        $("#ddlcity").change(function () {
+
+            if ($("#ddlcity option:selected").val() == "Other") {
+
+                $("#ddlcity").hide();
+                $("#txtcity").show();
+            }
+            else {
+
+                $("#ddlcity").show();
+                $("#txtcity").hide();
+            }
+
+            
+
+        });
+
+        $("#txtcity").change(function () {
+            $("#ddlcity").val($("#txtcity").val());
+        
+        });
+        
+        $("#MailService").change(function () {
+            $("#DakService").val($("#MailService option:selected").text());
+        });
+
+
+
+        $("#dakentry").validate();
+        $("#Jct_Dak_Register_Cheque_Cheque_No").rules("add", { required: true, messages: { required: "Enter Cheque/Draft Number" } });
+        $("#Jct_Dak_Register_Cheque_BankName").rules("add", { required: true, messages: { required: "Select a Bank Name" } });
+        $("#Jct_Dak_Register_Cheque_Amount").rules("add", { required: true, messages: { required: "Enter Amount" } });
+        $("#Jct_Dak_Register_Cheque_Payable_At").rules("add", { required: true, messages: { required: "Enter Payable At " } });
+
+
+        $("#date").rules("add", { required: true, messages: { required: "Select the Letter Date" } });
+        $("#ddlDept").rules("add", { required: true, messages: { required: "Select Department" } });
+        $("#Textarea").rules("add", { required: true, messages: { required: "Enter Subject" } });
+        $("#SenderName").rules("add", { required: true, messages: { required: "Enter Sender Name" } });
+        $("#DakType").rules("add", { required: true, messages: { required: "Select a Dak Type" } });
+        $("#MailMode").rules("add", { required: true, messages: { required: "Select a Mail Mode" } });
+        $("#MailService").rules("add", { required: true, messages: { required: "Select a MailService" } });
+        $("#ddlHod").rules("add", { required: true, messages: { required: "Reciever Name Cant be Empty" } });
+        $("#ddlHod").rules("add", { required: true, messages: { required: "Reciever Name Cant be Empty" } });
+        $("#txtAddress1").rules("add", { required: true, messages: { required: "Please Select a Party Address" } });
+       
+
+        $("#ddlHod").rules("add", { required: true, messages: { required: "Please select a option" } });
+
+        $("#SenderDetails").validate();
+        $("#PartyName").rules("add", { required: true, messages: { required: "Enter Party Name" } });
+        $("#Address").rules("add", { required: true, messages: { required: "Enter Party Address" } });
+        //---------------------------------------------------------------------------------//
+        $(".close").click(function () {
+            //$("#myAlert").attr("data-dismiss", "alert");
+
+            $("#myAlert").alert(".close");
+            //$('#myAlert').on('closed.bs.alert', function () {
+            //    location.reload();
+            //});
+        });
+
+        //---------------------------------JTable-------------------------//
+
+
+    });
+
+    //Jquery Result alert
+    function OnSuccess(msg) {
+
+
+        //$(".close").slideUp(5000, function () {
+        //    $("#myAlert").alert('close');
+        //    window.location = "/Receipt";
+        //});
+        $("#spinner").stop().fadeOut('fast');
+        if (msg == "The record was not added successfully") {
+
+            $("#ResultModal").modal('show');
+            $(".modal-body").append("<a class='close' href='' aria-hidden='true' id='myAlert'>&times;</a>");
+            $(".modal-body").append($("<p class='alert alert-danger'></p>").html(msg));
+        }
+        else {
+            $("#ResultModal").modal('show');
+            $(".modal-body").append("<a class='close' href='' aria-hidden='true' id='myAlert'>&times;</a>");
+            $(".modal-body").append($("<p class='alert alert-success'></p>").html(msg));
+
+        }
+
+        $("#modalclose").click(function () {
+
+            $("#myAlert").alert('close');
+
+            window.location = "/Receipt/NewDakEntry";
+        });
+
+    }
+
+    function FormSubmit(){
+        $("#spinner").fadeIn('fast');
+        return true;
+    };
+</script>
+
+
+
+<div id="page-content" style="min-height: 378px;">
+    <div class="content-header">
+        <div class="header-section">
+            <div class="row">
+                <div class="col-md-5 col-lg-6 hidden-sm">
+                    <h1>DAK INFORAMTION FORM</h1>
+                </div>
+            </div>
+        </div>
+        <!-- END Header -->
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><i class="fa fa-angle-right"></i> @*<a class="accordion-toggle" data-toggle="collapse" data-parent="#faq2" href="#faq2_q1">*@INFORMATION@*</a>*@</h4>
+        </div>
+        @using (Ajax.BeginForm("DakEntry", "Receipt", null, new AjaxOptions { OnBegin = "return FormSubmit() ", UpdateTargetId = "Result", HttpMethod = "POST", OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { @id = "dakentry", onkeydown = "return (event.keyCode!=13);" }))
+        {
+            <input type="hidden" id="hdnval" />
+            @Html.HiddenFor(x => x.AddressID, new { @id="address_id"})
+
+            <div id="faq2_q1">
+                <div class="panel-body">
+                    <div class="tophdrbuttons">
+
+                        <div class="row">
+                            <div class="pull-left">
+                                <label for="example-nf-email">Dak Type</label>
+                                @Html.DropDownListFor(x => x.Jct_Dak_Register.Dak_Code, Model.DropDownViewModel.DakType, "Select Dak Type", new { @id = "DakType", @class = "form-control" })
+                                @Html.HiddenFor(x => x.Jct_Dak_Register.Dak_Type, new { @id = "Dak_Type" })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block">
+                                <!-- Normal Form Title -->
+                                <div class="block-title">
+                                    <h2><strong>Sender </strong> Details</h2>
+                                </div>
+                                <div class="form-horizontal form-bordered">
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <input type="hidden" id="hdnRadioValue" />
+                                            @Html.RadioButtonFor(x => x.RadioValue, "A", new { @checked = true })
+                                            @Html.Label("All")
+
+                                            @Html.RadioButtonFor(x => x.RadioValue, "S")
+                                            @Html.Label("Vendor")
+
+                                            @Html.RadioButtonFor(x => x.RadioValue, "C")
+                                            @Html.Label("Customer")
+
+                                            @Html.RadioButtonFor(x => x.RadioValue, "O")
+                                            @Html.Label("Other")
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">Sender Name</label>
+
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Header.Party_Name, new { @id = "SenderName",autocomplete="off"})                   
+                                            @Html.HiddenFor(x => x.Jct_Dak_Party_Header.Party_Code, new { @id = "hdnPartyCode" })
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.Label("sender", new { @id = "SenderType", @class = "example-nf-email" })
+                                            @Html.HiddenFor(x => x.Jct_Dak_Register.Party_Type, new {@id="partytype" })
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="example-nf-email">Name not in list</label>
+                                            <a id="Popup" href="" data-toggle="modal">click here</a>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-mod-3">
+                                            <div class="panel-group" id="accordion">
+                                                <!-- accordion 1 -->
+                                                <div class="panel panel-primary" id="AddressList" data-toggle="collapse" data-parent="#accordion" data-target="#Gridshow">
+
+                                                    <div class="panel-heading" style="background-color: rgb(180, 0, 0);">
+                                                        <!-- panel-heading -->
+                                                        <h4 class="panel-title">
+                                                            <i class="fa fa-angle-right"></i>
+                                                            <!-- title 1 -->
+                                                            <a>
+                                                                Address List
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                                <div id="Gridshow" class="panel-collapse collapse in">
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">Sender Address</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Address_Line_1, new { @id = "txtAddress1", @readonly = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <label for="example-nf-email">Country</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Country, new { @id = "txtCountry", @disabled = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">State</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.State, new { @id = "txtState", @disabled = true, @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">  City</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.City, new { @id = "txtCity", @disabled = true, @class = "form-control" })
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="col-md-3">
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Address_Line_2, new { @id = "txtAddress2", @disabled = true, @class = "form-control" })
+
+
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">  Zip</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Zip_No, new { @id = "txtZip", @disabled = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">  Phone Number</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Phone_No, new { @id = "txtPhone", @disabled = true, @class = "form-control" })
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email"> Fax</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Fax_No, new { @id = "txtFax", @disabled = true, @class = "form-control" })
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Address_Line_3, new { @id = "txtAddress3", @disabled = true, @class = "form-control" })
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Telex Number
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Telex_No, new { @id = "txtTelex", @disabled = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Email
+                                            </label>
+
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Email, new { @id = "txtEmail", @disabled = true, @class = "form-control" })
+
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                    @*<div class="form-group form-actions">
+                                                            <div class="col-xs-12">
+                                                                <button type="submit" class="btn btn-sm btn-primary darkbluebtn"><i class="fa fa-angle-right"></i> Submit</button>
+                                                                <button type="reset" class="btn btn-sm btn-warning dark_greenbtn"><i class="fa fa-repeat"></i> Reset</button>
+                                                            </div>
+                                        </div>*@
+
+
+                                </div>
+                                <!-- END Normal Form Content -->
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block">
+                                <!-- Normal Form Title -->
+                                <div class="block-title">
+                                    <h2><strong>Letter </strong> Details</h2>
+                                </div>
+                                <div class="form-horizontal form-bordered">
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Reference Number
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.ReferenceNo, new { @class = "form-control" })
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Recieve Mode
+                                            </label>
+
+                                            @Html.DropDownListFor(x => x.Jct_Dak_Register.DakService_Code, Model.DropDownViewModel.MailMode, "Select Dak Mode", new { @id = "MailMode", @class = "form-control" })
+                                            @Html.HiddenFor(x => x.Jct_Dak_Register.DakService_Mode, new { @id = "DakMode" })
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Recieve Service
+                                            </label>
+
+                                            @Html.DropDownListFor(x => x.Jct_Dak_Register.DakService_Type,Enumerable.Empty<SelectListItem>(), "Select Mail Service", new { @id = "MailService", @class = "form-control" })
+
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Letter Date
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.Reference_Date, new { @id = "date", @class = "form-control" })
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+
+                                            <label for="example-nf-email">
+                                                Subject
+                                            </label>
+                                            @*@Html.TextAreaFor(x => x.Jct_Dak_Register.SUBJECT, new { @id = "Textarea", @class = "form-control" })*@
+
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.SUBJECT, new { @id = "Textarea", @class = "form-control" })
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Department
+                                            </label>
+                                            @Html.DropDownListFor(x => x.JCT_EMP_HOD.Deptcode, Model.DropDownViewModel.DeptList, "Select Department", new { @id = "ddlDept", @class = "form-control" })
+                                            @Html.HiddenFor(x => x.Jct_Dak_Register.Department, new { @id = "deptname" })
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Reciever Name
+                                            </label>
+
+                                            @Html.DropDownListFor(x => x.Jct_Dak_Register.Hod_Code, Enumerable.Empty<SelectListItem>(), "Hod Name", new { @id = "ddlHod", @disabled = true, @class = "form-control" })
+                                            @Html.HiddenFor(x => x.Jct_Dak_Register.Hod_Code, new { @id = "HodCode" })
+                                            <label class="error" id="lblReciever" style="display:none">Select Reciever Name</label>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block">
+                                <!-- Normal Form Title -->
+                                <div class="block-title">
+                                    <h2><strong>User </strong> Notification</h2>
+                                </div>
+                                <div class="form-horizontal form-bordered">
+
+                                    <div class="form-group">
+
+
+
+                                        <div class="col-md-3">
+
+                                            <label for="example-nf-email">
+                                                Mail To
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.MailTo, new { @id = "Mail", @disabled = true, @class = "form-control" })
+                                            @Html.HiddenFor(x => x.Jct_Dak_Register.MailTo, new { @id = "MailValue" })
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <label for="example-nf-email">
+                                                Phone Number
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.Phone_No, new { @id = "Phone", @disabled = true, @class = "form-control" })
+                                            @Html.HiddenFor(x => x.Jct_Dak_Register.Phone_No, new { @id = "PhoneValue" })
+                                        </div>
+
+                                        <div class="col-md-3" >
+
+                                            <label for="example-nf-email">
+                                                Concerned Personnels
+                                            </label>
+                                            @Html.TextAreaFor(x => x.Jct_Dak_Register.ConcernedPersonals, new { @id = "ConcernedPersonals" })
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="panel panel-default" id="cheque">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="fa fa-angle-right"></i> @*<a class="accordion-toggle" data-toggle="collapse" data-parent="#faq2" href="#faq2_q4">*@CHEQUE INFORMATION@*</a>*@</h4>
+                </div>
+                <div id="faq2_q4">
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="block">
+                                    <!-- Normal Form Title -->
+                                    <div class="block-title">
+                                        <h2><strong>Cheque </strong> Details</h2>
+                                    </div>
+                                    <div class="form-horizontal form-bordered">
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <label for="example-nf-email">Cheque/Draft Number</label>
+                                                @Html.TextBoxFor(x => x.Jct_Dak_Register_Cheque.Cheque_No, new { @class = "form-control" })
+                                            </div>
+
+
+                                            <div class="col-md-3">
+                                                <label for="example-nf-email">Bank Name</label>
+                                                @Html.DropDownListFor(x => x.Jct_Dak_Register_Cheque.BankName, Model.DropDownViewModel.BankList, "Select BankName", new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label for="example-nf-email">Amount</label>
+                                                @Html.TextBoxFor(x => x.Jct_Dak_Register_Cheque.Amount, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label for="example-nf-email">Payable At</label>
+                                                @Html.TextBoxFor(x => x.Jct_Dak_Register_Cheque.Payable_At, new { @class = "form-control" })
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div id="faq2_q434">
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block">
+                                <!-- Normal Form Title -->
+                                <div class="block-title">
+                                    <h2><strong>Remarks </strong></h2>
+                                </div>
+                                <div class="form-horizontal form-bordered">
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">Remarks</label>
+                                            @Html.TextAreaFor(x => x.Jct_Dak_Register.Remarks, new { @class = "form-control" })
+                                        </div>
+
+                                    </div>
+                                    <div class="pull-right">
+                                        <input id="Submit1" type="submit" value="submit" class="btn btn-primary" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+
+
+    <div id="ResultModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+                    <h2 class="modal-title">ALERT</h2>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="modalclose" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("AddSender", "Receipt", FormMethod.Post, new { @id = "SenderDetails" }))
+    {
+        <div id="myModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    @{Html.RenderPartial("~/Views/Receipt/_NewSender.cshtml");}
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*Ajax Laoding Modal------------------------------------------------------------------------------------------*@
+
+        <div id="spinner" style="background: rgba(0, 0, 0, 0.5) none no-repeat fixed center center;">
+
+            <img src="~/Content/images/ajax-loader.gif" alt="Please Wait............" style="margin-top: 30%; margin-right: 17%;" />
+</div>
+            @*------------------------------------------------------------------------------------------------------------*@
+
+    }
+</div>

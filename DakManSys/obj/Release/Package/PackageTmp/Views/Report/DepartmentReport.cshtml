@@ -1,0 +1,86 @@
+﻿@model DakManSys.ViewModel.ParentViewModel
+@using MVCGrid.Web;
+@{
+    ViewBag.Title = "DepartmentReport";
+}
+<style type="text/css">
+    #MVCGridContainer_DepartmentWiseReport > div {
+        overflow: auto;
+    }
+
+</style>
+<script>
+    $(document).ready(function () {
+        $("#ddlDept").change(function () {
+            MVCGrid.setAdditionalQueryOptions('DepartmentWiseReport',
+     {
+         DeptCode: $("#ddlDept option:selected").val()
+     });
+        });
+
+
+
+        $(".action").click(function (event) {
+            event.preventDefault();
+            var temp = $(this).html();
+            $.ajax({
+                url: '/UserAcceptance/Detail',
+                type: 'POST',
+                dataType: 'json',
+                data: { inwardNo: $(this).html(),flag:"report" },
+                success: function (json) {
+                    if (json.isRedirect == true) {
+                        window.location.href = json.redirectUrl;
+                    }
+                    else {
+                        location.reload();
+                    }
+                }
+            });
+        });
+
+
+    });
+</script>
+
+<div id="page-content" style="min-height: 378px;">
+    <div class="content-header">
+        <div class="header-section">
+            <div class="row">
+                <div class="col-md-5 col-lg-6 hidden-sm">
+                    <h1>DepartmentReport</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="inputEmail3">Department</label>
+            <div class="col-sm-6">
+                @Html.DropDownListFor(x => x.Jct_Dak_Register.Dept_Code, Model.DropDownViewModel.DeptList, "Select Department", new { @id = "ddlDept" })
+            </div>
+        </div>
+        
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            @Html.Partial("_MVCGridToolbar", new DakManSys.Models.MVCGridToolbarModel()
+        {
+            MVCGridName = "DepartmentWiseReport",
+            PageSize = true,
+            Export = true,
+            GlobalSearch = true
+        })
+            @Html.MVCGrid("DepartmentWiseReport")
+        </div>
+    </div>
+
+    </div>
+
+
+
+
+
+
+

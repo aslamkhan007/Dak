@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DRSModelStoreContainer" CdmEntityContainer="DRSEntities">
+    <EntitySetMapping Name="Jct_Dak_BankMaster">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_BankMaster">
+        <MappingFragment StoreEntitySet="Jct_Dak_BankMaster">
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="BankCode" ColumnName="BankCode" />
+          <ScalarProperty Name="BankName" ColumnName="BankName" />
+          <ScalarProperty Name="Empcode" ColumnName="Empcode" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Dated" ColumnName="Dated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_Cities">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_Cities">
+        <MappingFragment StoreEntitySet="Jct_Dak_Cities">
+          <ScalarProperty Name="city_id" ColumnName="city_id" />
+          <ScalarProperty Name="city_name" ColumnName="city_name" />
+          <ScalarProperty Name="city_state" ColumnName="city_state" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_Country">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_Country">
+        <MappingFragment StoreEntitySet="Jct_Dak_Country">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_DeptMaster">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_DeptMaster">
+        <MappingFragment StoreEntitySet="Jct_Dak_DeptMaster">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="DEPTCODE" ColumnName="DEPTCODE" />
+          <ScalarProperty Name="DEPTNAME" ColumnName="DEPTNAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="jct_Dak_Email">
+      <EntityTypeMapping TypeName="DRSModel.jct_Dak_Email">
+        <MappingFragment StoreEntitySet="jct_Dak_Email">
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="Emp_Code" ColumnName="Emp_Code" />
+          <ScalarProperty Name="hod_code" ColumnName="hod_code" />
+          <ScalarProperty Name="Emp_Name" ColumnName="Emp_Name" />
+          <ScalarProperty Name="EMail_ID" ColumnName="EMail_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_Itemtype">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_Itemtype">
+        <MappingFragment StoreEntitySet="Jct_Dak_Itemtype">
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="Dak_Code" ColumnName="Dak_Code" />
+          <ScalarProperty Name="DakType" ColumnName="DakType" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Empcode" ColumnName="Empcode" />
+          <ScalarProperty Name="Created_On" ColumnName="Created_On" />
+          <ScalarProperty Name="Created_Hostname" ColumnName="Created_Hostname" />
+          <ScalarProperty Name="Ip_Address" ColumnName="Ip_Address" />
+          <ScalarProperty Name="EffectiveFrom" ColumnName="EffectiveFrom" />
+          <ScalarProperty Name="EffectiveTo" ColumnName="EffectiveTo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_Party_Detail_Address">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_Party_Detail_Address">
+        <MappingFragment StoreEntitySet="Jct_Dak_Party_Detail_Address">
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="Party_Type" ColumnName="Party_Type" />
+          <ScalarProperty Name="Party_Code" ColumnName="Party_Code" />
+          <ScalarProperty Name="address_id" ColumnName="address_id" />
+          <ScalarProperty Name="Address_Line_1" ColumnName="Address_Line_1" />
+          <ScalarProperty Name="Address_Line_2" ColumnName="Address_Line_2" />
+          <ScalarProperty Name="Address_Line_3" ColumnName="Address_Line_3" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Zip_No" ColumnName="Zip_No" />
+          <ScalarProperty Name="Phone_No" ColumnName="Phone_No" />
+          <ScalarProperty Name="Telex_No" ColumnName="Telex_No" />
+          <ScalarProperty Name="Fax_No" ColumnName="Fax_No" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Dob" ColumnName="Dob" />
+          <ScalarProperty Name="Created_On" ColumnName="Created_On" />
+          <ScalarProperty Name="Empcode" ColumnName="Empcode" />
+          <ScalarProperty Name="Created_Hostname" ColumnName="Created_Hostname" />
+          <ScalarProperty Name="Ip_Address" ColumnName="Ip_Address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_Party_Header">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_Party_Header">
+        <MappingFragment StoreEntitySet="Jct_Dak_Party_Header">
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="Party_Type" ColumnName="Party_Type" />
+          <ScalarProperty Name="Party_Code" ColumnName="Party_Code" />
+          <ScalarProperty Name="Party_Name" ColumnName="Party_Name" />
+          <ScalarProperty Name="Created_On" ColumnName="Created_On" />
+          <ScalarProperty Name="Empcode" ColumnName="Empcode" />
+          <ScalarProperty Name="Created_Hostname" ColumnName="Created_Hostname" />
+          <ScalarProperty Name="Ip_Address" ColumnName="Ip_Address" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Reference_Employee" ColumnName="Reference_Employee" />
+          <ScalarProperty Name="Ex_Employee" ColumnName="Ex_Employee" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_Party_Sr_No">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_Party_Sr_No">
+        <MappingFragment StoreEntitySet="Jct_Dak_Party_Sr_No">
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="PartyNo" ColumnName="PartyNo" />
+          <ScalarProperty Name="Delimiter" ColumnName="Delimiter" />
+          <ScalarProperty Name="EffectiveFrom" ColumnName="EffectiveFrom" />
+          <ScalarProperty Name="EffectiveTo" ColumnName="EffectiveTo" />
+          <ScalarProperty Name="Empcode" ColumnName="Empcode" />
+          <ScalarProperty Name="Dated" ColumnName="Dated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_Register_Cheque">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_Register_Cheque">
+        <MappingFragment StoreEntitySet="Jct_Dak_Register_Cheque">
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="Inward_No" ColumnName="Inward_No" />
+          <ScalarProperty Name="Cheque_No" ColumnName="Cheque_No" />
+          <ScalarProperty Name="Cheque_Date" ColumnName="Cheque_Date" />
+          <ScalarProperty Name="BankName" ColumnName="BankName" />
+          <ScalarProperty Name="Payable_At" ColumnName="Payable_At" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Created_On" ColumnName="Created_On" />
+          <ScalarProperty Name="Empcode" ColumnName="Empcode" />
+          <ScalarProperty Name="Created_Hostname" ColumnName="Created_Hostname" />
+          <ScalarProperty Name="Ip_Address" ColumnName="Ip_Address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="jct_dak_role">
+      <EntityTypeMapping TypeName="DRSModel.jct_dak_role">
+        <MappingFragment StoreEntitySet="jct_dak_role">
+          <ScalarProperty Name="Trans_No" ColumnName="Trans_No" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+          <ScalarProperty Name="empcode" ColumnName="empcode" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="Dept" ColumnName="Dept" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_Service_Details">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_Service_Details">
+        <MappingFragment StoreEntitySet="Jct_Dak_Service_Details">
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="ServiceMode_Code" ColumnName="ServiceMode_Code" />
+          <ScalarProperty Name="DakService_Code" ColumnName="DakService_Code" />
+          <ScalarProperty Name="DakService_Name" ColumnName="DakService_Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Address_Line_1" ColumnName="Address_Line_1" />
+          <ScalarProperty Name="Address_Line_2" ColumnName="Address_Line_2" />
+          <ScalarProperty Name="Address_Line_3" ColumnName="Address_Line_3" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+          <ScalarProperty Name="Email_Address" ColumnName="Email_Address" />
+          <ScalarProperty Name="Office_Number" ColumnName="Office_Number" />
+          <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+          <ScalarProperty Name="WebSite" ColumnName="WebSite" />
+          <ScalarProperty Name="STDCode" ColumnName="STDCode" />
+          <ScalarProperty Name="Logo" ColumnName="Logo" />
+          <ScalarProperty Name="Empcode" ColumnName="Empcode" />
+          <ScalarProperty Name="Created_On" ColumnName="Created_On" />
+          <ScalarProperty Name="Created_Hostname" ColumnName="Created_Hostname" />
+          <ScalarProperty Name="Ip_Address" ColumnName="Ip_Address" />
+          <ScalarProperty Name="EffectiveFrom" ColumnName="EffectiveFrom" />
+          <ScalarProperty Name="EffectiveTo" ColumnName="EffectiveTo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_Service_Mode">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_Service_Mode">
+        <MappingFragment StoreEntitySet="Jct_Dak_Service_Mode">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="ServiceMode_Code" ColumnName="ServiceMode_Code" />
+          <ScalarProperty Name="ServiceMode_Name" ColumnName="ServiceMode_Name" />
+          <ScalarProperty Name="Empcode" ColumnName="Empcode" />
+          <ScalarProperty Name="Created_On" ColumnName="Created_On" />
+          <ScalarProperty Name="Created_Hostname" ColumnName="Created_Hostname" />
+          <ScalarProperty Name="Ip_Address" ColumnName="Ip_Address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_State">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_State">
+        <MappingFragment StoreEntitySet="Jct_Dak_State">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="state" ColumnName="state" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_Type_Sr_No">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_Type_Sr_No">
+        <MappingFragment StoreEntitySet="Jct_Dak_Type_Sr_No">
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="Area" ColumnName="Area" />
+          <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+          <ScalarProperty Name="StartNo" ColumnName="StartNo" />
+          <ScalarProperty Name="LastNo" ColumnName="LastNo" />
+          <ScalarProperty Name="Postfix" ColumnName="Postfix" />
+          <ScalarProperty Name="Delimiter" ColumnName="Delimiter" />
+          <ScalarProperty Name="EffectiveFrom" ColumnName="EffectiveFrom" />
+          <ScalarProperty Name="EffectiveTo" ColumnName="EffectiveTo" />
+          <ScalarProperty Name="Empcode" ColumnName="Empcode" />
+          <ScalarProperty Name="Dated" ColumnName="Dated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JCT_EMP_HOD">
+      <EntityTypeMapping TypeName="DRSModel.JCT_EMP_HOD">
+        <MappingFragment StoreEntitySet="JCT_EMP_HOD">
+          <ScalarProperty Name="Trans_No" ColumnName="Trans_No" />
+          <ScalarProperty Name="Hod_Code" ColumnName="Hod_Code" />
+          <ScalarProperty Name="Hod_Name" ColumnName="Hod_Name" />
+          <ScalarProperty Name="Deptcode" ColumnName="Deptcode" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="E_MailID" ColumnName="E_MailID" />
+          <ScalarProperty Name="Flag" ColumnName="Flag" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Eff_From" ColumnName="Eff_From" />
+          <ScalarProperty Name="Eff_To" ColumnName="Eff_To" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_Register">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_Register">
+        <MappingFragment StoreEntitySet="Jct_Dak_Register">
+          <ScalarProperty Name="Party_Type" ColumnName="Party_Type" />
+          <ScalarProperty Name="Email_Status" ColumnName="Email_Status" />
+          <ScalarProperty Name="PartyAddress_id" ColumnName="PartyAddress_id" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="DakService_Mode" ColumnName="DakService_Mode" />
+          <ScalarProperty Name="Ip_Address" ColumnName="Ip_Address" />
+          <ScalarProperty Name="Created_Hostname" ColumnName="Created_Hostname" />
+          <ScalarProperty Name="Created_On" ColumnName="Created_On" />
+          <ScalarProperty Name="Empcode" ColumnName="Empcode" />
+          <ScalarProperty Name="Attached_File" ColumnName="Attached_File" />
+          <ScalarProperty Name="ConcernedPersonals" ColumnName="ConcernedPersonals" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="SUBJECT" ColumnName="SUBJECT" />
+          <ScalarProperty Name="DakService_Type" ColumnName="DakService_Type" />
+          <ScalarProperty Name="DakService_Code" ColumnName="DakService_Code" />
+          <ScalarProperty Name="MailTo" ColumnName="MailTo" />
+          <ScalarProperty Name="Phone_No" ColumnName="Phone_No" />
+          <ScalarProperty Name="Hod_Code" ColumnName="Hod_Code" />
+          <ScalarProperty Name="Dept_Code" ColumnName="Dept_Code" />
+          <ScalarProperty Name="Party_Code" ColumnName="Party_Code" />
+          <ScalarProperty Name="Reference_Date" ColumnName="Reference_Date" />
+          <ScalarProperty Name="ReferenceNo" ColumnName="ReferenceNo" />
+          <ScalarProperty Name="Inward_No" ColumnName="Inward_No" />
+          <ScalarProperty Name="Dak_Type" ColumnName="Dak_Type" />
+          <ScalarProperty Name="Dak_Code" ColumnName="Dak_Code" />
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jct_Dak_Register_Recieved">
+      <EntityTypeMapping TypeName="DRSModel.Jct_Dak_Register_Recieved">
+        <MappingFragment StoreEntitySet="Jct_Dak_Register_Recieved">
+          <ScalarProperty Name="Email_Status" ColumnName="Email_Status" />
+          <ScalarProperty Name="Ip_Address" ColumnName="Ip_Address" />
+          <ScalarProperty Name="Created_Hostname" ColumnName="Created_Hostname" />
+          <ScalarProperty Name="Empcode" ColumnName="Empcode" />
+          <ScalarProperty Name="Created_On" ColumnName="Created_On" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Reply_ReferenceDate" ColumnName="Reply_ReferenceDate" />
+          <ScalarProperty Name="Reply_ReferenceNo" ColumnName="Reply_ReferenceNo" />
+          <ScalarProperty Name="Received_Status" ColumnName="Received_Status" />
+          <ScalarProperty Name="Inward_No" ColumnName="Inward_No" />
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JCT_EMP_HOD_Dept">
+      <EntityTypeMapping TypeName="DRSModel.JCT_EMP_HOD_Dept">
+        <MappingFragment StoreEntitySet="JCT_EMP_HOD_Dept">
+          <ScalarProperty Name="Eff_To" ColumnName="Eff_To" />
+          <ScalarProperty Name="Eff_From" ColumnName="Eff_From" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Flag" ColumnName="Flag" />
+          <ScalarProperty Name="E_MailID" ColumnName="E_MailID" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Deptcode" ColumnName="Deptcode" />
+          <ScalarProperty Name="Hod_Name" ColumnName="Hod_Name" />
+          <ScalarProperty Name="Hod_Code" ColumnName="Hod_Code" />
+          <ScalarProperty Name="Trans_No" ColumnName="Trans_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

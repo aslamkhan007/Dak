@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "UserDakRecievedReport";
+}
+<script src="~/Scripts/jquery-ui-1.10.2.js"></script>
+<link href="~/Content/jQuery%20UI-1.10.3.css" rel="stylesheet" />
+<style>
+    #MVCGridContainer_UserDakRecievedReport > div {
+        overflow: auto;
+        width: 100% !important;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+
+        $(".action").click(function (event) {
+            event.preventDefault();
+            var temp = $(this).html();
+            $.ajax({
+                url: '/UserAcceptance/Detail',
+                type: 'POST',
+                dataType: 'json',
+                data: { inwardNo: $(this).html(), flag: "report" },
+                success: function (json) {
+                    if (json.isRedirect == true) {
+                        window.location.href = json.redirectUrl;
+                    }
+                    else {
+                        location.reload();
+                    }
+                }
+            });
+        });
+    });
+
+</script>
+<div id="page-content" style="min-height: 378px;">
+    <div class="content-header">
+        <div class="header-section">
+            <div class="row">
+                <div class="col-md-5 col-lg-6 hidden-sm">
+                    <h1>Dak Recieved Report </h1>
+                </div>
+            </div>
+        </div>
+        <!-- END Header -->
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><i class="fa fa-angle-right"></i>Dak Recieved Report </h4>
+        </div>
+
+
+        <div id="fa_q434">
+
+
+            <div class="panel-body">
+                <div class="col-md-12">
+                    @Html.Partial("_MVCGridToolbar", new DakManSys.Models.MVCGridToolbarModel()
+        {
+            MVCGridName = "UserDakRecievedReport",
+            PageSize = true,
+            Export = true,
+            GlobalSearch = true
+        })
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.MVCGrid("UserDakRecievedReport")
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    </div>

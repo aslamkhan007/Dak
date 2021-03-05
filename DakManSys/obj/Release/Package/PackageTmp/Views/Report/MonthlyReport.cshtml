@@ -1,0 +1,144 @@
+﻿@using MVCGrid.Web;
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/jquery-ui-1.10.2.js"></script>
+<link href="~/Content/jQuery%20UI-1.10.3.css" rel="stylesheet" />
+<style type="text/css">
+    #MVCGridContainer_MonthlyReport > div {
+        overflow: auto;
+        width: 100% !important;
+    }
+
+    .label {
+        font-size: 88% !important;
+    }
+
+    .form-control.txtreplydate {
+        min-width: 88px !important;
+    }
+
+    .form-control.txtRemarks {
+        min-width: 200px;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('#fetch').click(function () {
+            MVCGrid.setAdditionalQueryOptions('MonthlyReport',
+       {
+           startDate: $("#startdate").val(),
+           endDate: $("#enddate").val()
+       });
+        });
+
+        $("#startdate").datepicker({
+            maxDate:'today'
+        });
+        $("#enddate").datepicker({
+            autoclose: true
+        });
+
+        $(".action").click(function (event) {
+            event.preventDefault();
+            var temp = $(this).html();
+            $.ajax({
+                url: '/UserAcceptance/Detail',
+                type: 'POST',
+                dataType: 'json',
+                data: { inwardNo: $(this).html(),flag:"report" },
+                success: function (json) {
+                    if (json.isRedirect == true) {
+                        window.location.href = json.redirectUrl;
+                    }
+                    else
+                    {
+                        location.reload();
+                    }
+                }
+            });
+        });
+
+
+    });
+
+</script>
+
+
+
+
+
+<div id="page-content" style="min-height: 378px;">
+    <div class="content-header">
+        <div class="header-section">
+            <div class="row">
+                <div class="col-md-5 col-lg-6 hidden-sm">
+                    <h1>Monthly Report</h1>
+                </div>
+            </div>
+        </div>
+        <!-- END Header -->
+        </div>
+        
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><i class="fa fa-angle-right"></i>Monthly Report </h4>
+    </div>
+
+
+        <div id="fa_q434">
+           
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="row">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="inputEmail3">Start Date</label>
+            <div class="col-sm-2">
+                <input type="text" id="startdate" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="inputEmail3">End Date</label>
+            <div class="col-sm-2">
+                <input type="text" id="enddate" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-6">
+                <button class="btn btn-primary" id="fetch" type="button">Fetch</button>
+            </div>
+        </div>
+                        </div>
+                    </div>
+                </div>
+
+
+    </div>
+
+        <div class="panel-body">
+                    <div class="col-md-12">
+            @Html.Partial("_MVCGridToolbar", new DakManSys.Models.MVCGridToolbarModel()
+        {
+            MVCGridName = "MonthlyReport",
+            PageSize = true,
+            Export = true,
+            GlobalSearch = true
+        })
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+            @Html.MVCGrid("MonthlyReport")
+        </div>
+    </div>
+
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>

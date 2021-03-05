@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DRSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Jct_Dak_BankMaster">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BankCode" Type="varchar" MaxLength="10" />
+    <Property Name="BankName" Type="varchar" MaxLength="100" />
+    <Property Name="Empcode" Type="varchar" MaxLength="10" />
+    <Property Name="Status" Type="char" MaxLength="1" />
+    <Property Name="Dated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Cities">
+    <Key>
+      <PropertyRef Name="city_id" />
+    </Key>
+    <Property Name="city_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="city_name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="city_state" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Country">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_DeptMaster">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DEPTCODE" Type="varchar" MaxLength="10" />
+    <Property Name="DEPTNAME" Type="varchar" MaxLength="150" />
+    <Property Name="Status" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="jct_Dak_Email">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Emp_Code" Type="varchar" MaxLength="7" />
+    <Property Name="hod_code" Type="varchar" MaxLength="7" />
+    <Property Name="Emp_Name" Type="varchar" MaxLength="40" />
+    <Property Name="EMail_ID" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Itemtype">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Dak_Code" Type="varchar" MaxLength="500" />
+    <Property Name="DakType" Type="varchar" MaxLength="20" />
+    <Property Name="Description" Type="varchar" MaxLength="5000" />
+    <Property Name="Empcode" Type="varchar" MaxLength="7" />
+    <Property Name="Created_On" Type="datetime" />
+    <Property Name="Created_Hostname" Type="varchar" MaxLength="15" />
+    <Property Name="Ip_Address" Type="varchar" MaxLength="15" />
+    <Property Name="EffectiveFrom" Type="datetime" />
+    <Property Name="EffectiveTo" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Party_Detail_Address">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Party_Type" Type="char" MaxLength="1" />
+    <Property Name="Party_Code" Type="char" MaxLength="18" />
+    <Property Name="address_id" Type="char" MaxLength="6" />
+    <Property Name="Address_Line_1" Type="varchar" MaxLength="60" />
+    <Property Name="Address_Line_2" Type="varchar" MaxLength="60" />
+    <Property Name="Address_Line_3" Type="varchar" MaxLength="60" />
+    <Property Name="City" Type="varchar" MaxLength="60" />
+    <Property Name="State" Type="varchar" MaxLength="60" />
+    <Property Name="Country" Type="varchar" MaxLength="60" />
+    <Property Name="Zip_No" Type="varchar" MaxLength="40" />
+    <Property Name="Phone_No" Type="varchar" MaxLength="20" />
+    <Property Name="Telex_No" Type="varchar" MaxLength="60" />
+    <Property Name="Fax_No" Type="varchar" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="20" />
+    <Property Name="Dob" Type="datetime" />
+    <Property Name="Created_On" Type="datetime" />
+    <Property Name="Empcode" Type="varchar" MaxLength="7" />
+    <Property Name="Created_Hostname" Type="varchar" MaxLength="15" />
+    <Property Name="Ip_Address" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Party_Header">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Party_Type" Type="char" MaxLength="1" />
+    <Property Name="Party_Code" Type="char" MaxLength="18" />
+    <Property Name="Party_Name" Type="varchar" MaxLength="60" />
+    <Property Name="Created_On" Type="datetime" />
+    <Property Name="Empcode" Type="varchar" MaxLength="7" />
+    <Property Name="Created_Hostname" Type="varchar" MaxLength="15" />
+    <Property Name="Ip_Address" Type="varchar" MaxLength="15" />
+    <Property Name="Remarks" Type="varchar" MaxLength="100" />
+    <Property Name="Reference_Employee" Type="varchar" MaxLength="50" />
+    <Property Name="Ex_Employee" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Party_Sr_No">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PartyNo" Type="varchar" MaxLength="6" />
+    <Property Name="Delimiter" Type="char" MaxLength="1" />
+    <Property Name="EffectiveFrom" Type="datetime" />
+    <Property Name="EffectiveTo" Type="datetime" />
+    <Property Name="Empcode" Type="varchar" MaxLength="10" />
+    <Property Name="Dated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Register">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Dak_Code" Type="varchar" MaxLength="500" />
+    <Property Name="Dak_Type" Type="varchar" MaxLength="10" />
+    <Property Name="Inward_No" Type="varchar" MaxLength="20" />
+    <Property Name="ReferenceNo" Type="varchar" MaxLength="50" />
+    <Property Name="Reference_Date" Type="datetime" />
+    <Property Name="Party_Code" Type="char" MaxLength="8" />
+    <Property Name="Dept_Code" Type="varchar" MaxLength="30" />
+    <Property Name="Hod_Code" Type="varchar" MaxLength="10" />
+    <Property Name="Phone_No" Type="varchar" MaxLength="8000" />
+    <Property Name="MailTo" Type="varchar" MaxLength="500" />
+    <Property Name="DakService_Code" Type="varchar" MaxLength="100" />
+    <Property Name="DakService_Type" Type="varchar" MaxLength="50" />
+    <Property Name="SUBJECT" Type="varchar(max)" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="Attached_File" Type="varchar" MaxLength="2000" />
+    <Property Name="Empcode" Type="varchar" MaxLength="7" />
+    <Property Name="Created_On" Type="datetime" />
+    <Property Name="Created_Hostname" Type="varchar" MaxLength="15" />
+    <Property Name="Ip_Address" Type="varchar" MaxLength="15" />
+    <Property Name="DakService_Mode" Type="varchar" MaxLength="20" />
+    <Property Name="Department" Type="varchar" MaxLength="30" />
+    <Property Name="PartyAddress_id" Type="char" MaxLength="6" />
+    <Property Name="Email_Status" Type="bit" Nullable="false" />
+    <Property Name="Party_Type" Type="varchar" MaxLength="5" />
+    <Property Name="ConcernedPersonals" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Register_Cheque">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Inward_No" Type="varchar" MaxLength="20" />
+    <Property Name="Cheque_No" Type="varchar(max)" />
+    <Property Name="Cheque_Date" Type="datetime" />
+    <Property Name="BankName" Type="varchar" MaxLength="50" />
+    <Property Name="Payable_At" Type="varchar" MaxLength="30" />
+    <Property Name="Amount" Type="varchar(max)" />
+    <Property Name="Created_On" Type="datetime" />
+    <Property Name="Empcode" Type="varchar" MaxLength="7" />
+    <Property Name="Created_Hostname" Type="varchar" MaxLength="15" />
+    <Property Name="Ip_Address" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Register_Recieved">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Inward_No" Type="varchar" MaxLength="20" />
+    <Property Name="Received_Status" Type="bit" Nullable="false" />
+    <Property Name="Reply_ReferenceNo" Type="varchar" MaxLength="50" />
+    <Property Name="Reply_ReferenceDate" Type="datetime" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="Created_On" Type="datetime" />
+    <Property Name="Empcode" Type="varchar" MaxLength="7" />
+    <Property Name="Created_Hostname" Type="varchar" MaxLength="15" />
+    <Property Name="Ip_Address" Type="varchar" MaxLength="15" />
+    <Property Name="Email_Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="jct_dak_role">
+    <Key>
+      <PropertyRef Name="Trans_No" />
+    </Key>
+    <Property Name="Trans_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="char" MaxLength="8" />
+    <Property Name="Rolename" Type="varchar" MaxLength="40" />
+    <Property Name="empcode" Type="nvarchar" MaxLength="7" />
+    <Property Name="DESCRIPTION" Type="varchar" MaxLength="20" />
+    <Property Name="Dept" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Service_Details">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ServiceMode_Code" Type="varchar" MaxLength="100" />
+    <Property Name="DakService_Code" Type="varchar" MaxLength="100" />
+    <Property Name="DakService_Name" Type="varchar" MaxLength="100" />
+    <Property Name="Description" Type="varchar" MaxLength="5000" />
+    <Property Name="Address_Line_1" Type="varchar" MaxLength="200" />
+    <Property Name="Address_Line_2" Type="varchar" MaxLength="200" />
+    <Property Name="Address_Line_3" Type="varchar" MaxLength="200" />
+    <Property Name="City" Type="varchar" MaxLength="100" />
+    <Property Name="ZipCode" Type="varchar" MaxLength="12" />
+    <Property Name="State" Type="varchar" MaxLength="100" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="PhoneNo" Type="varchar" MaxLength="12" />
+    <Property Name="Email_Address" Type="varchar" MaxLength="100" />
+    <Property Name="Office_Number" Type="varchar" MaxLength="12" />
+    <Property Name="FaxNumber" Type="varchar" MaxLength="20" />
+    <Property Name="WebSite" Type="varchar" MaxLength="100" />
+    <Property Name="STDCode" Type="varchar" MaxLength="6" />
+    <Property Name="Logo" Type="varchar" MaxLength="100" />
+    <Property Name="Empcode" Type="varchar" MaxLength="7" />
+    <Property Name="Created_On" Type="datetime" />
+    <Property Name="Created_Hostname" Type="varchar" MaxLength="15" />
+    <Property Name="Ip_Address" Type="varchar" MaxLength="15" />
+    <Property Name="EffectiveFrom" Type="datetime" />
+    <Property Name="EffectiveTo" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Service_Mode">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ServiceMode_Code" Type="varchar" MaxLength="100" />
+    <Property Name="ServiceMode_Name" Type="varchar" MaxLength="100" />
+    <Property Name="Empcode" Type="varchar" MaxLength="7" />
+    <Property Name="Created_On" Type="datetime" />
+    <Property Name="Created_Hostname" Type="varchar" MaxLength="15" />
+    <Property Name="Ip_Address" Type="varchar" MaxLength="15" />
+    <Property Name="Status" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_State">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="state" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Type_Sr_No">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Area" Type="varchar" MaxLength="30" />
+    <Property Name="Prefix" Type="varchar" MaxLength="5" />
+    <Property Name="StartNo" Type="varchar" MaxLength="6" />
+    <Property Name="LastNo" Type="varchar" MaxLength="6" />
+    <Property Name="Postfix" Type="varchar" MaxLength="5" />
+    <Property Name="Delimiter" Type="char" MaxLength="1" />
+    <Property Name="EffectiveFrom" Type="datetime" />
+    <Property Name="EffectiveTo" Type="datetime" />
+    <Property Name="Empcode" Type="varchar" MaxLength="10" />
+    <Property Name="Dated" Type="datetime" />
+  </EntityType>
+  <EntityType Name="JCT_EMP_HOD">
+    <Key>
+      <PropertyRef Name="Trans_No" />
+    </Key>
+    <Property Name="Trans_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Hod_Code" Type="varchar" MaxLength="10" />
+    <Property Name="Hod_Name" Type="varchar" MaxLength="50" />
+    <Property Name="Deptcode" Type="varchar" MaxLength="10" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="255" />
+    <Property Name="E_MailID" Type="varchar" MaxLength="40" />
+    <Property Name="Flag" Type="varchar" MaxLength="2" />
+    <Property Name="Status" Type="char" MaxLength="1" />
+    <Property Name="Eff_From" Type="datetime" />
+    <Property Name="Eff_To" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'DRS.dbo.JCT_EMP_HOD_Dept' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="JCT_EMP_HOD_Dept">
+    <Key>
+      <PropertyRef Name="Trans_No" />
+    </Key>
+    <Property Name="Trans_No" Type="int" Nullable="false" />
+    <Property Name="Hod_Code" Type="varchar" MaxLength="10" />
+    <Property Name="Hod_Name" Type="varchar" MaxLength="50" />
+    <Property Name="Deptcode" Type="varchar" MaxLength="10" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="255" />
+    <Property Name="E_MailID" Type="varchar" MaxLength="40" />
+    <Property Name="Flag" Type="varchar" MaxLength="2" />
+    <Property Name="Status" Type="char" MaxLength="1" />
+    <Property Name="Eff_From" Type="datetime" />
+    <Property Name="Eff_To" Type="datetime" />
+  </EntityType>
+  <EntityContainer Name="DRSModelStoreContainer">
+    <EntitySet Name="Jct_Dak_BankMaster" EntityType="Self.Jct_Dak_BankMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_Cities" EntityType="Self.Jct_Dak_Cities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_Country" EntityType="Self.Jct_Dak_Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_DeptMaster" EntityType="Self.Jct_Dak_DeptMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="jct_Dak_Email" EntityType="Self.jct_Dak_Email" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_Itemtype" EntityType="Self.Jct_Dak_Itemtype" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_Party_Detail_Address" EntityType="Self.Jct_Dak_Party_Detail_Address" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_Party_Header" EntityType="Self.Jct_Dak_Party_Header" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_Party_Sr_No" EntityType="Self.Jct_Dak_Party_Sr_No" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_Register" EntityType="Self.Jct_Dak_Register" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_Register_Cheque" EntityType="Self.Jct_Dak_Register_Cheque" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_Register_Recieved" EntityType="Self.Jct_Dak_Register_Recieved" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="jct_dak_role" EntityType="Self.jct_dak_role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_Service_Details" EntityType="Self.Jct_Dak_Service_Details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_Service_Mode" EntityType="Self.Jct_Dak_Service_Mode" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_State" EntityType="Self.Jct_Dak_State" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jct_Dak_Type_Sr_No" EntityType="Self.Jct_Dak_Type_Sr_No" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JCT_EMP_HOD" EntityType="Self.JCT_EMP_HOD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JCT_EMP_HOD_Dept" EntityType="Self.JCT_EMP_HOD_Dept" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [JCT_EMP_HOD_Dept].[Trans_No] AS [Trans_No], 
+    [JCT_EMP_HOD_Dept].[Hod_Code] AS [Hod_Code], 
+    [JCT_EMP_HOD_Dept].[Hod_Name] AS [Hod_Name], 
+    [JCT_EMP_HOD_Dept].[Deptcode] AS [Deptcode], 
+    [JCT_EMP_HOD_Dept].[Mobile] AS [Mobile], 
+    [JCT_EMP_HOD_Dept].[E_MailID] AS [E_MailID], 
+    [JCT_EMP_HOD_Dept].[Flag] AS [Flag], 
+    [JCT_EMP_HOD_Dept].[Status] AS [Status], 
+    [JCT_EMP_HOD_Dept].[Eff_From] AS [Eff_From], 
+    [JCT_EMP_HOD_Dept].[Eff_To] AS [Eff_To]
+    FROM [dbo].[JCT_EMP_HOD_Dept] AS [JCT_EMP_HOD_Dept]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

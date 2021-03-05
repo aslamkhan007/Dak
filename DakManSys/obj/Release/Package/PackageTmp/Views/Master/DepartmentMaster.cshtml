@@ -1,0 +1,137 @@
+﻿@model DakManSys.Models.MasterModel.DepartmentMasterModel
+@{
+    ViewBag.Title = "DepartmentMaster";
+}
+<script src="~/Scripts/jquery-ui-1.10.2.js"></script>
+@*<script src="~/Scripts/jquery-ui-1.9.2.js"></script>*@
+<link href="~/Content/jQuery%20UI-1.10.3.css" rel="stylesheet" />
+<script src="~/Scripts/jtable/jquery.jtable.js"></script>
+<link href="~/Scripts/jtable/themes/lightcolor/green/jtable.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.validate.js"></script>
+<style>
+    #DepartmentMaster label.error {
+        color: #b94a48;
+    }
+
+    #DepartmentMaster select.error {
+        border: 1px solid #b94a48;
+    }
+
+    #DepartmentMaster input.error {
+        border: 1px solid #b94a48;
+    }
+    .validation-summary-errors {
+        color: #b94a48;
+    }
+
+    .validation-summary-valid {
+        display: none;
+    }
+    .ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only.mk {
+        margin: -10% 0 2% 20%;
+    }
+
+</style>
+
+<script>
+    $(document).ready(function () {
+        $("#DepartmentMaster").validate();
+
+        $("#dept").rules("add", { required: true, messages: { required: "Enter Department Name" } });
+        $("#deleteMaster").jtable({
+            paging: true,
+            pageSize: 10,
+            sorting: true, //Enable sorting
+            defaultSorting: 'DEPTNAME ASC',
+            selecting: true, //Enable selecting
+            selectingCheckboxes: true, //Show checkboxes on first column
+            multiselect: true,
+            //selectOnRowClick: false, //Enable this to only select using checkboxes
+            actions: {
+                listAction: '/Master/DepartmentDetails',
+                deleteAction: '/Master/DepartmentDelete'
+            },
+            fields: {
+                DEPTCODE: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                DEPTNAME: {
+                    title: 'Department',
+                    width: '12%'
+                }
+            },
+
+        });
+
+        $('#deleteMaster').jtable('load');
+        $("#DeleteAllButton").on('click', function () {
+
+            if (confirm("These Selected records will be deleted. Are you sure??")) {
+                var $selectedRows = $('#deleteMaster').jtable('selectedRows');
+                $('#deleteMaster').jtable('deleteRows', $selectedRows);
+            }
+            return false;
+
+
+        });
+    });
+
+</script>
+@using (Html.BeginForm("DepartmentMaster", "Master", FormMethod.Post, new { @id="DepartmentMaster"}))
+{
+<div id="page-content" style="min-height: 378px;">
+    <div class="content-header">
+        <div class="header-section">
+            <div class="row">
+                <div class="col-md-5 col-lg-6 hidden-sm">
+                    <h1>Department Master</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="fa_awq434">
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true)
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">Department Name</label>
+                           
+                            <div class="col-sm-2">
+                                @*<input type="text" class="form-control hasDatepicker" id="startdate">*@
+                                @Html.TextBoxFor(x => x.Department, new { @class = "form-control", @id = "dept" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-6">
+                                <input type="submit" value="Submit" class="btn btn-primary" />
+                            </div>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    </div>
+
+
+    <div align="center" style="margin:0% 0% 8% 20%;min-width: 150px; max-width: 500px;" id="deleteMaster">
+
+
+    </div>
+    <div>
+        <button id="DeleteAllButton" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only mk" role="button" aria-disabled="false">
+            <span class="ui-button-text">
+                Delete all selected records
+            </span>
+        </button>
+
+    </div>
+    </div>
+}

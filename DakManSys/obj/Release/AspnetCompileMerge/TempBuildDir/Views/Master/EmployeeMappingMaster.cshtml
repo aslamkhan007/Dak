@@ -1,0 +1,245 @@
+﻿@model DakManSys.Models.MasterModel.EmployeeMappingModel
+@{
+    ViewBag.Title = "EmployeeMapping";
+}
+
+
+<script src="~/Scripts/jquery-ui-1.10.2.js"></script>
+<link href="~/Content/jQuery%20UI-1.10.3.css" rel="stylesheet" />
+<script src="~/Scripts/jtable/jquery.jtable.js"></script>
+<link href="~/Scripts/jtable/themes/lightcolor/green/jtable.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#EmpMappingMaster").validate();
+
+        $("#EmployeeName").rules("add", { required: true, messages: { required: "Enter Employee Name" } });
+        $("#EmployeeCode").rules("add", { required: true, messages: { required: "Enter Employee Salary Caode" } });
+        $("#Email").rules("add", { required: true, messages: { required: "Enter Employee Email Address" } });
+
+
+        $("#dept").change(function () {
+
+                    $("#EmployeeMaster").jtable({
+                        paging: true,
+                        pageSize: 10,
+                        sorting: true, //Enable sorting
+                        defaultSorting: 'Hod_Name ASC',
+                        selecting: true, //Enable selecting
+                        selectingCheckboxes: true, //Show checkboxes on first column
+                        multiselect: true,
+                        actions: {
+                            listAction: function (postData) {
+                                return $.Deferred(function ($dfd) {
+                                    $.ajax({
+                                        url: '/Master/EmployeeListForDept',
+                                        dataType: 'json',
+                                        type: 'POST',
+                                        data: { deptCode: $("#dept option:selected").val() },
+                                        success:function(result)
+                                        {
+                                            $dfd.resolve(result);
+                                        },
+                                        error: function () {
+                                            $dfd.reject();
+                                        }
+                                    });
+
+                                });
+
+                            },
+                            deleteAction: '/Master/EmployeeDelete'
+                        },
+                        fields: {
+
+                            Hod_Code: {
+                                key: true,
+                                create: false,
+                                edit: false,
+                                list: false
+                            },
+                            Hod_Name: {
+                                title: 'Employee Name',
+                                width: '12%'
+                            },
+                            E_MailID: {
+                                title: 'Employee Email',
+                                width: '15%'
+                            },
+
+
+                        },
+
+                    });
+                    $('#EmployeeMaster').jtable('load');
+        });
+
+     
+        $("#DeleteAllButton").on('click', function () {
+
+            if (confirm("These Selected records will be deleted. Are you sure??")) {
+                var $selectedRows = $('#EmployeeMaster').jtable('selectedRows');
+                $('#EmployeeMaster').jtable('deleteRows', $selectedRows);
+            }
+            return false;
+
+
+        });
+
+
+
+        $("#EmployeeCode").change(function () {
+
+            
+            $.ajax({
+                url: '/Master/GetEmployeeEmail',
+                dataType: 'json',
+                type: 'POST',
+                data: { EmployeeCode: $("#EmployeeCode").val() },
+                success: function (result) {
+                    
+
+                    $("#Email").val(result);
+                },
+                error: function () {
+                    $dfd.reject();
+                }
+            });
+
+
+
+        });
+
+
+
+
+    });
+
+</script>
+
+
+
+<style>
+    #EmpMappingMaster label.error {
+        color: #b94a48;
+    }
+
+    #EmpMappingMaster select.error {
+        border: 1px solid #b94a48;
+    }
+
+    #EmpMappingMaster input.error {
+        border: 1px solid #b94a48;
+    }
+
+    .validation-summary-errors {
+        color: #b94a48;
+    }
+
+    .validation-summary-valid {
+        display: none;
+    }
+
+    .ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only.mk {
+        margin: -10% 0 2% 20%;
+    }
+</style>
+
+@using (Html.BeginForm("EmployeeMappingMaster", "Master", FormMethod.Post, new { @id = "EmpMappingMaster" }))
+{
+<div id="page-content" style="min-height: 378px;">
+        <div class="content-header">
+            <div class="header-section">
+                <div class="row">
+                    <div class="col-md-5 col-lg-6 hidden-sm">
+                        <h1>Employee Master</h1>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="mm">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group">
+
+                        <label for="inputEmail3" class="col-md-3">Department Name</label>
+
+                        <div class="col-sm-3">
+                            
+                            @Html.DropDownListFor(x => x.Department, Model.Deptlist, new { @class = "form-control col-md-3", @id = "dept" })
+                        </div>
+                    </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div id="fa_awq434">
+                            <div class="panel-body">
+                                <div class="block">
+                                    <div class="block-title">
+                                        <h2>
+                                           @*Employee Mapping  and Detail Information*@ 
+
+                                        </h2>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="form-horizontal">
+                                                @Html.ValidationSummary(true)
+
+                                                <div class="form-group">
+                                                    <div class="col-md-3">
+                                                        <label for="example-nf-email">Employee Name</label>
+                                                        @Html.TextBoxFor(x => x.EmployeeName, new { @class = "form-control" })
+                                                    </div>
+
+                                                    <div class="col-md-3">
+
+                                                        <label for="example-nf-email">Employee Code</label>
+                                                        @Html.TextBoxFor(x => x.EmployeeCode, new { @class = "form-control" })
+                                                        @*<input type="text" value="INDIA" name="Jct_Dak_Party_Detail_Address.Country" id="txtCountry" disabled="True" class="form-control">*@
+
+                                                    </div>
+                                                    <div class="col-md-3">
+
+                                                        <label for="example-nf-email">Employee Email</label>
+                                                        @Html.TextBoxFor(x => x.Email, new { @readonly = true, @class = "form-control" })
+
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-offset-4 col-sm-6">
+                                                        <input type="submit" value="Submit" class="btn btn-primary" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div align="center" style="margin:0% 0% 8% 20%;min-width: 150px; max-width: 500px;" id="EmployeeMaster">
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                       
+
+                    </div>
+
+             
+        </div>
+
+
+
+
+    </div>
+    </div>
+}
+

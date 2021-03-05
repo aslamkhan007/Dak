@@ -1,0 +1,124 @@
+﻿
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if IE 9]>         <html class="no-js lt-ie10"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>JCT LIMITED</title>
+    <meta name="description" content="JCT">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+    <link href="~/Custome/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Custome/css/plugins.css" rel="stylesheet" />
+    <link href="~/Custome/css/main.css" rel="stylesheet" />
+
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <style type="text/css">
+        .logo {
+            padding: 1px 0 !important;
+        }
+
+        .dropdown-header {
+            display: block;
+            font-size: 16px !important;
+            line-height: 1.42857;
+            padding: 3px 20px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div id="page-container" class="sidebar-visible-lg sidebar-no-animations">
+
+        <div id="sidebar">
+            <div class="sidebar-scroll">
+
+                <div class="sidebar-content">
+
+                    <div class="logo"><img src="~/Custome/img/logo.png" alt=""></div>
+
+                    <ul class="sidebar-nav">
+
+                        <li class="sidebar_darblubg"> <a href="~/Receipt/Index"><i class="gi gi-home sidebar-nav-icon"></i>Home</a></li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="sidebar_darblubg"> <a href="~/Master/BankMaster"><i class="gi gi gi-bank sidebar-nav-icon"></i>Bank Details Master</a></li>
+                            <li class="sidebar_darblubg"><a href="~/Master/EmployeeMappingMaster"><i class="gi gi gi-user_add sidebar-nav-icon"></i>Employee Mapping </a> </li>
+                            <li class="sidebar_darblubg"> <a href="~/Master/DakServiceMaster"><i class="gi gi gi-notes sidebar-nav-icon"></i>Dak Service Master</a></li>
+                            <li class="sidebar_darblubg"> <a href="~/Master/DepartmentMaster"><i class="gi gi gi-git_branch sidebar-nav-icon"></i>Department Master</a></li>
+                            <li class="sidebar_darblubg"> <a href="~/Master/DakServiceModeMaster"><i class="gi gi gi-address_book sidebar-nav-icon"></i>ServiceMode Master </a></li>
+
+                            <li class="sidebar_darblubg"> <a href="~/Receipt/NewDakEntry"><i class="gi gi gi-database_plus sidebar-nav-icon"></i>Entry Page</a></li>
+                            <li class="sidebar_darblubg"> <a href="~/Report/MonthlyReport"><i class="gi gi gi-notes_2 sidebar-nav-icon"></i> Monthly Report</a></li>
+                            <li class="sidebar_darblubg"> <a href="~/Report/DepartmentReport"><i class="gi gi gi-notes sidebar-nav-icon"></i> Department Report</a></li>
+                            <li class="sidebar_darblubg"> <a href="~/Report/ChequeReport"><i class="gi gi gi-history sidebar-nav-icon"></i>Cheque Report</a></li>
+                            <li class="sidebar_darblubg"> <a href="~/Report/ParcelReport"><i class="gi gi gi-history sidebar-nav-icon"></i>Parcel Report</a></li>
+                            <li class="sidebar_darblubg"> <a href="~/BulkMail/Index"><i class="gi gi gi-notes sidebar-nav-icon"></i>Bulk Mail</a></li>
+                            @*<li class="sidebar_darblubg"> <a href="~/ConcernedMail/ConcernedMail"><i class="gi gi gi-notes sidebar-nav-icon"></i>Concerned Person Mail</a></li>*@
+                        }
+                        @if (User.IsInRole("User"))
+                        {
+                            <li class="sidebar_darblubg"> <a href="~/UserAcceptance/Index"><i class="gi gi gi-user sidebar-nav-icon"></i>User Acceptance</a></li>
+                            <li class="sidebar_darblubg"> <a href="~/Report/UserDakRecievedReport"><i class="gi gi gi-notes sidebar-nav-icon"></i>Dak Recieved Report</a></li>
+                            <li class="sidebar_darblubg"> <a href="~/Report/UserMonthlyReport"><i class="gi gi gi-notes sidebar-nav-icon"></i> User Monthly Report</a></li>
+                        }
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div id="main-container">
+            <header class="navbar navbar-default">
+                <ul class="nav navbar-nav-custom">
+                    <li> <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');"> <i class="fa fa-bars fa-fw"></i> </a> </li>
+                </ul>
+
+                <ul class="nav navbar-nav-custom pull-right">
+                    <li>
+                        <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                            <li> <a href="javascript:void(0)"><i class="fa fa-plus pull-right"></i>Test Action here</a> <a href="javascript:void(0)"><i class="fa fa-video-camera pull-right"></i>Another Action</a> <a href="javascript:void(0)"><i class="fa fa-envelope-o pull-right"></i>Another Action</a> </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">  <i class="fa fa-angle-down"></i> </a>
+                        <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                            <li class="dropdown-header text-center">Account</li>
+                            <li> @*<a href="page_ready_lock_screen.html"><i class="fa fa-lock fa-fw pull-right"></i> Lock Account</a>*@ <a href="~/Authenticate/SignOut"><i class="fa fa-ban fa-fw pull-right"></i> Logout</a> </li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+            </header>
+
+            <footer class="clearfix">
+                @RenderBody()
+
+                <div class="pull-right">
+                    <b>
+                        2016  &copy; JCT Limited
+                    </b>
+                </div>
+
+                @*<script src="~/MVCGridHandler.axd/script.js"></script>*@
+                <script src="~/Custome/js/Grid.js"></script>
+            </footer>
+
+        </div>
+
+    </div>
+
+    <!-- END Page Container -->
+
+    <script src="~/Custome/js/app.js"></script>
+
+</body>
+</html>

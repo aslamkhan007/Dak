@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "DeleteDakService";
+}
+<script src="~/Scripts/jquery-ui-1.10.2.js"></script>
+@*<script src="~/Scripts/jquery-ui-1.9.2.js"></script>*@
+<link href="~/Content/jQuery%20UI-1.10.3.css" rel="stylesheet" />
+<script src="~/Scripts/jtable/jquery.jtable.js"></script>
+<link href="~/Scripts/jtable/themes/lightcolor/green/jtable.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+        $("#deleteMaster").jtable({
+            paging: true,
+            pageSize: 10,
+            sorting: true, //Enable sorting
+            defaultSorting: 'BankName ASC',
+            selecting: true, //Enable selecting
+            selectingCheckboxes: true, //Show checkboxes on first column
+            multiselect: true,
+            //selectOnRowClick: false, //Enable this to only select using checkboxes
+            actions: {
+                listAction: '/Receipt/BankDetails',
+                deleteAction: '/Receipt/BankDelete'
+            },
+            fields: {
+                BankCode: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                BankName: {
+                    title: 'Bank Name',
+                    width: '12%'
+                }
+            },
+
+        });
+
+        $('#deleteMaster').jtable('load');
+        $("#DeleteAllButton").on('click', function () {
+            var $selectedRows = $('#deleteMaster').jtable('selectedRows');
+            $('#deleteMaster').jtable('deleteRows', $selectedRows);
+
+        });
+    });
+
+</script>
+<div id="page-content" style="min-height: 378px;">
+    <div class="content-header">
+        <div class="header-section">
+            <div class="row">
+                <div class="col-md-5 col-lg-6 hidden-sm">
+                    <h1>Delete Dak Service</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div align="center" style="margin:0% 0% 8% 20%;min-width: 150px; max-width: 500px;" id="deleteMaster">
+
+
+    </div>
+    <div>
+        <button id="DeleteAllButton" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+            <span class="ui-button-text">
+                Delete all selected records
+            </span>
+        </button>
+
+    </div>
+</div>

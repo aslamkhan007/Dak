@@ -1,0 +1,422 @@
+﻿@model DakManSys.ViewModel.ParentViewModel
+<style>
+    #Textarea {
+        width: 473px !important;
+        height: 60px !important;
+        max-width: 100% !important;
+    }
+
+    #Jct_Dak_Register_Remarks {
+        max-width: 100%;
+        width: 70%;
+    }
+
+    #ui-id-1 {
+        height: 30% !important;
+        overflow: scroll !important;
+    }
+
+    input text {
+        max-width: 150px !important;
+        width: 150px !important;
+    }
+
+
+    #txtAddress2 {
+        margin-top: 14%;
+    }
+
+    #txtAddress3 {
+        margin-top: 14%;
+    }
+
+
+    .panel-heading > div {
+        float: right;
+        margin-top: -3% !important;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+
+        if ($("#Dak_Type").val() == "Cheque") {
+            $("#cheque").show();
+        }
+        else {
+            $("#cheque").hide().css("display:none");
+        }
+        $("#btnedit").click(function () {
+            window.location = "/Edit/EditDetails?DakNo=" + $("#Dak_No").val();
+        });
+    });
+
+
+
+</script>
+<div id="page-content" style="min-height: 378px;">
+    <div class="content-header">
+        <div class="header-section">
+            <div class="row">
+                <div class="col-md-5 col-lg-6 hidden-sm">
+                    <h1>DAK DETAIL</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><i class="fa fa-angle-right"></i>DETAIL</h4>
+             @if (User.IsInRole("Admin"))
+              {
+            
+            <div>
+                <input type="button" value="Edit" class="btn btn-primary " id="btnedit" />
+            </div>
+             }
+            
+        </div>
+        <div id="child">
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="example-nf-email">Dak Type</label>
+
+                            @Html.TextBoxFor(x => x.Jct_Dak_Register.Dak_Type, new { @id = "Dak_Type", @disabled = true, @class = "form-control" })
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="example-nf-email">Inward Number</label>
+                            @Html.TextBoxFor(x => x.Jct_Dak_Register.Inward_No, new { @id = "Dak_No", @disabled = true, @class = "form-control" })
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block">
+                                <!-- Normal Form Title -->
+                                <div class="block-title">
+                                    <h2><strong>Sender</strong>Details</h2>
+                                </div>
+
+
+                                <div class="form-horizontal form-bordered">
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <label for="example-nf-email">Sender Name:-</label>
+
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Header.Party_Name, new { @id = "SenderName", @disabled = true, @class = "form-control" })
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">Sender Address</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Address_Line_1, new { @id = "txtAddress1", @disabled = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <label for="example-nf-email">Country</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Country, new { @id = "txtCountry", @disabled = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">State</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.State, new { @id = "txtState", @disabled = true, @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">  City</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.City, new { @id = "txtCity", @disabled = true, @class = "form-control" })
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="col-md-3">
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Address_Line_2, new { @id = "txtAddress2", @disabled = true, @class = "form-control" })
+
+
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">  Zip</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Zip_No, new { @id = "txtZip", @disabled = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">  Phone Number</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Phone_No, new { @id = "txtPhone", @disabled = true, @class = "form-control" })
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email"> Fax</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Fax_No, new { @id = "txtFax", @disabled = true, @class = "form-control" })
+
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Address_Line_3, new { @id = "txtAddress3", @disabled = true, @class = "form-control" })
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Telex Number
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Telex_No, new { @id = "txtTelex", @disabled = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Email
+                                            </label>
+
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Email, new { @id = "txtEmail", @disabled = true, @class = "form-control" })
+
+
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block">
+                                <!-- Normal Form Title -->
+                                <div class="block-title">
+                                    <h2><strong>Letter </strong> Details</h2>
+                                </div>
+                                <div class="form-horizontal form-bordered">
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Reference Number
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.ReferenceNo, new { @id = "referNo", @class = "form-control", @disabled = true })
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Recieve Mode
+                                            </label>
+
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.DakService_Mode, new { @id = "MailMode", @disabled = true, @class = "form-control" })
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Recieve Service
+                                            </label>
+
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.DakService_Type, new { @id = "MailService", @disabled = true, @class = "form-control" })
+
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Letter Date
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.Reference_Date, new { @id = "date", @class = "form-control", @disabled = true })
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+
+                                            <label for="example-nf-email">
+                                                Subject
+                                            </label>
+                                            @Html.TextAreaFor(x => x.Jct_Dak_Register.SUBJECT, new { @id = "Textarea", @class = "form-control", @disabled = true })
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Department
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.Department, new { @id = "ddlDept", @disabled = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Reciever Name
+                                            </label>
+                                            @Html.TextBoxFor(x => x.JCT_EMP_HOD.Hod_Name, new { @id = "ddlHod", @disabled = true, @class = "form-control" })
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block">
+                                <!-- Normal Form Title -->
+                                <div class="block-title">
+                                    <h2><strong>User </strong> Notification</h2>
+                                </div>
+                                <div class="form-horizontal form-bordered">
+
+                                    <div class="form-group">
+
+
+
+                                        <div class="col-md-3">
+
+                                            <label for="example-nf-email">
+                                                Mail To
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.MailTo, new { @id = "Mail", @disabled = true, @class = "form-control" })
+
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <label for="example-nf-email">
+                                                Phone Number
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.Phone_No, new { @id = "Phone", @disabled = true, @class = "form-control" })
+
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <label for="example-nf-email">
+                                                Concerned Personnels
+                                            </label>
+                                            @Html.TextAreaFor(x => x.Jct_Dak_Register.ConcernedPersonals, new { @id = "ConcernedPersonals", @disabled = true })
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="cheque">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="fa fa-angle-right"></i> @*<a class="accordion-toggle" data-toggle="collapse" data-parent="#faq2" href="#faq2_q4">*@CHEQUE INFORMATION@*</a>*@</h4>
+                </div>
+                <div id="faq2_q4">
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="block">
+                                    <!-- Normal Form Title -->
+                                    <div class="block-title">
+                                        <h2><strong>Cheque </strong> Details</h2>
+                                    </div>
+                                    <div class="form-horizontal form-bordered">
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <label for="example-nf-email">Cheque/Draft Number</label>
+                                                @Html.TextBoxFor(x => x.Jct_Dak_Register_Cheque.Cheque_No, new { @class = "form-control", @disabled = true })
+                                            </div>
+
+
+                                            <div class="col-md-3">
+                                                <label for="example-nf-email">Bank Name</label>
+                                                @Html.TextBoxFor(x => x.Jct_Dak_Register_Cheque.BankName, new { @disabled = true })
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label for="example-nf-email">Amount</label>
+                                                @Html.TextBoxFor(x => x.Jct_Dak_Register_Cheque.Amount, new { @class = "form-control", @disabled = true })
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label for="example-nf-email">Payable At</label>
+                                                @Html.TextBoxFor(x => x.Jct_Dak_Register_Cheque.Payable_At, new { @class = "form-control", @disabled = true })
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div id="faq2_q434">
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block">
+                                <!-- Normal Form Title -->
+                                <div class="block-title">
+                                    <h2><strong>Remarks </strong></h2>
+                                </div>
+                                <div class="form-horizontal form-bordered">
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <label for="example-nf-email">Remarks</label>
+                                            @Html.TextAreaFor(x => x.Jct_Dak_Register.Remarks, new { @class = "form-control", @disabled = true })
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+</div>
+    </div>
+
+
+
+
+
+
+
+
+

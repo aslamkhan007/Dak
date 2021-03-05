@@ -1,0 +1,567 @@
+﻿@model DakManSys.ViewModel.ParentViewModel
+@{
+    ViewBag.Title = "EditDetails";
+}
+<script src="~/Scripts/jquery-ui-1.10.2.js"></script>
+<link href="~/Content/jQuery%20UI-1.10.3.css" rel="stylesheet" />
+<style>
+    #Textarea {
+        width: 473px !important;
+        height: 60px !important;
+        max-width: 100% !important;
+    }
+
+    #Jct_Dak_Register_Remarks {
+        max-width: 100%;
+        width: 70%;
+    }
+
+    #ui-id-1 {
+        height: 30% !important;
+        overflow: scroll !important;
+    }
+
+    input text {
+        max-width: 150px !important;
+        width: 150px !important;
+    }
+
+
+    #txtAddress2 {
+        margin-top: 14%;
+    }
+
+    #txtAddress3 {
+        margin-top: 14%;
+    }
+
+
+    .panel-heading > div {
+        float: right;
+        margin-top: -3% !important;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $("#ddlHod").hide().css("display:none");
+        if ($("#Dak_Type").val() == "Cheque") {
+            $("#cheque").show();
+        }
+        else {
+            $("#cheque").hide().css("display:none");
+        }
+
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+
+        $("#ConcernedPersonals").autocomplete({
+            source: function (request, response) {
+                var party = [];
+                var parties = {};
+                $.ajax({
+                    async: false,
+                    cache: false,
+                    type: "POST",
+                    minLength: 3,
+                    url: '/Edit/getEmployeeMail',
+                    data: { term: extractLast(request.term) },
+                    success: function (data) {
+
+                        for (var i = 0; i < data.length ; i++) {
+                            party[i] = { label: data[i].Value, Id: data[i].Key };
+
+                        }
+
+                    }
+                });
+                response(party);
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            select: function (event, ui) {
+
+
+
+                var terms = split(this.value);
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.Id);
+                // add placeholder to get the comma-and-space at the end
+                terms.push("");
+                this.value = terms.join(", ");
+
+                // $("#project-id").val(ui.item.key);
+
+                return false;
+            }
+        });
+
+
+
+        $("#ddlDept").change(function () {
+            $("#txtHod").hide().css("display:none");
+            $("#ddlHod").show().css("display:block");
+            $("#ddlHod").html("");
+            $("#Mail").html("");
+            $("#Phone").html("");
+            $("#deptname").val($("#ddlDept option:selected").text());
+            $.ajax({
+                url: '/Edit/fetchHod',
+                type: 'POST',
+                dataType: 'json',
+                data: { dept: $("#ddlDept option:selected").val() },
+                success: function (data) {
+                    $("#ddlHod").append("<option>Select Reciever</option>");
+                    for (var i = 0; i < data.length; i++) {
+                        $("#ddlHod").append($("<option></option>").val(data[i].Hod_Code).html(data[i].Hod_Name));
+                    }
+
+                }
+            });
+        });
+
+
+
+        $("#date").datepicker({
+        });
+
+
+
+        $("#MailMode").change(function () {
+            $("#DakMode").val($("#MailMode option:selected").text());
+
+            if ($(this).val() == "CO") {
+                $.ajax({
+                    url: '/Receipt/ServiceModeBind',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { MailMode: 'CO' },
+                    success: function (result) {
+                        $('#MailService').empty();
+                        $("#MailService").append($("<option>Select DAK Service</option>"));
+                        for (var i = 0 ; i < result.length; i++) {
+                            $("#MailService").append($("<option></option>").val(result[i].Value).html(result[i].Text));
+                        }
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    url: '/Receipt/ServiceModeBind',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { MailMode: 'PO' },
+                    success: function (result) {
+                        $('#MailService').empty();
+                        $("#MailService").append($("<option>Select DAK Service</option>"));
+                        for (var i = 0 ; i < result.length; i++) {
+                            $("#MailService").append($("<option></option>").val(result[i].Value).html(result[i].Text));
+                        }
+                    }
+                });
+            }
+        });
+
+
+
+        $("#ddlHod").change(function () {
+            $("#Mail").val("");
+            $("#Phone").val("");
+            $("#HodCode").val($("#ddlHod").val());
+            if ($("#ddlHod").val() !== "0") {
+                $.ajax({
+                    url: '/Receipt/HodDetails',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { Hod: $("#ddlHod").val() },
+                    success: function (result) {
+                        $("#Mail").val(result.E_MailID);
+                        $("#Phone").val(result.Mobile);
+                        $("#MailValue").val(result.E_MailID);
+                        $("#PhoneValue").val(result.Mobile);
+                    }
+
+                });
+            }
+
+        });
+
+    });
+
+</script>
+@using (Html.BeginForm("UpdateDak", "Edit", System.Web.Mvc.FormMethod.Post))
+{
+    <div id="page-content" style="min-height: 378px;">
+        <div class="content-header">
+            <div class="header-section">
+                <div class="row">
+                    <div class="col-md-5 col-lg-6 hidden-sm">
+                        <h1>DAK DETAIL</h1>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-angle-right"></i>DETAIL</h4>
+            </div>
+            <div id="child">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="example-nf-email">Dak Type</label>
+
+                                @Html.TextBoxFor(x => x.Jct_Dak_Register.Dak_Type, new { @id = "Dak_Type", @ReadOnly = true, @class = "form-control" })
+                                @Html.HiddenFor(x => x.Jct_Dak_Register.Dak_Code)
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="example-nf-email">Inward Number</label>
+                                @Html.TextBoxFor(x => x.Jct_Dak_Register.Inward_No, new { @id = "Dak_Type", @ReadOnly = true, @class = "form-control" })
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="block">
+                                    <!-- Normal Form Title -->
+                                    <div class="block-title">
+                                        <h2><strong>Sender</strong>Details</h2>
+                                    </div>
+
+
+                                    <div class="form-horizontal form-bordered">
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                                <label for="example-nf-email">Sender Name:-</label>
+
+                                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Header.Party_Name, new { @id = "SenderName", @ReadOnly = true, @class = "form-control" })
+                                                @Html.HiddenFor(x => x.Jct_Dak_Register.Party_Code)
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">Sender Address</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Address_Line_1, new { @id = "txtAddress1", @ReadOnly = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <label for="example-nf-email">Country</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Country, new { @id = "txtCountry", @ReadOnly = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">State</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.State, new { @id = "txtState", @ReadOnly = true, @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">  City</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.City, new { @id = "txtCity", @ReadOnly = true, @class = "form-control" })
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="col-md-3">
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Address_Line_2, new { @id = "txtAddress2", @ReadOnly = true, @class = "form-control" })
+
+
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">  Zip</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Zip_No, new { @id = "txtZip", @ReadOnly = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">  Phone Number</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Phone_No, new { @id = "txtPhone", @ReadOnly = true, @class = "form-control" })
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email"> Fax</label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Fax_No, new { @id = "txtFax", @ReadOnly = true, @class = "form-control" })
+
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Address_Line_3, new { @id = "txtAddress3", @ReadOnly = true, @class = "form-control" })
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Telex Number
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Telex_No, new { @id = "txtTelex", @ReadOnly = true, @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Email
+                                            </label>
+
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Email, new { @id = "txtEmail", @ReadOnly = true, @class = "form-control" })
+
+
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block">
+                                <!-- Normal Form Title -->
+                                <div class="block-title">
+                                    <h2><strong>Letter </strong> Details</h2>
+                                </div>
+                                <div class="form-horizontal form-bordered">
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Reference Number
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.ReferenceNo, new { @id = "referNo", @class = "form-control" })
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Recieve Mode
+                                            </label>
+                                            @Html.DropDownListFor(x => x.Jct_Dak_Register.DakService_Code, Model.DropDownViewModel.MailMode, "Select Dak Mode", new { @id = "MailMode", @class = "form-control" })
+                                            @Html.HiddenFor(x => x.Jct_Dak_Register.DakService_Mode, new { @id = "DakMode" })
+                                            @*@Html.TextBoxFor(x => x.Jct_Dak_Register.DakService_Type, new { @id = "MailMode",  @class = "form-control" })*@
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Recieve Service
+                                            </label>
+                                            @Html.DropDownListFor(x => x.Jct_Dak_Register.DakService_Type, Model.DropDownViewModel.MailService, "Select Mail Service", new { @id = "MailService", @class = "form-control" })
+                                            @*@Html.TextBoxFor(x => x.Jct_Dak_Register.DakService_Code, new { @id = "MailService", @class = "form-control" })*@
+
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Letter Date
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.Reference_Date, new { @id = "date", @class = "form-control" })
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+
+                                            <label for="example-nf-email">
+                                                Subject
+                                            </label>
+                                            @Html.TextAreaFor(x => x.Jct_Dak_Register.SUBJECT, new { @id = "Textarea", @class = "form-control" })
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Department
+                                            </label>
+                                            @Html.DropDownListFor(x => x.JCT_EMP_HOD.Deptcode, Model.DropDownViewModel.DeptList, "Select Department", new { @id = "ddlDept", @class = "form-control" })
+                                            @Html.HiddenFor(x => x.Jct_Dak_Register.Department, new { @id = "deptname" })
+                                            @*@Html.TextBoxFor(x => x.JCT_EMP_HOD.Deptcode, new { @id = "ddlDept", @class = "form-control" })*@
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="example-nf-email">
+                                                Reciever Name
+                                            </label>
+                                            @Html.DropDownListFor(x => x.Jct_Dak_Register.Hod_Code, Enumerable.Empty<SelectListItem>(), "Hod Name", new { @id = "ddlHod", @class = "form-control" })
+                                            @Html.HiddenFor(x => x.JCT_EMP_HOD.Hod_Code, new { @id = "HodCode" })
+                                            @Html.TextBoxFor(x => x.JCT_EMP_HOD.Hod_Name, new { @id = "txtHod", @class = "form-control", @ReadOnly = true })
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block">
+                                <!-- Normal Form Title -->
+                                <div class="block-title">
+                                    <h2><strong>User </strong> Notification</h2>
+                                </div>
+                                <div class="form-horizontal form-bordered">
+
+                                    <div class="form-group">
+
+
+
+                                        <div class="col-md-3">
+
+                                            <label for="example-nf-email">
+                                                Mail To
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.MailTo, new { @id = "Mail", @ReadOnly = true, @class = "form-control" })
+
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <label for="example-nf-email">
+                                                Phone Number
+                                            </label>
+                                            @Html.TextBoxFor(x => x.Jct_Dak_Register.Phone_No, new { @id = "Phone", @ReadOnly = true, @class = "form-control" })
+
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <label for="example-nf-email">
+                                                Concerned Personnels
+                                            </label>
+                                            @Html.TextAreaFor(x => x.Jct_Dak_Register.ConcernedPersonals, new { @id = "ConcernedPersonals" })
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="cheque">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="fa fa-angle-right"></i> @*<a class="accordion-toggle" data-toggle="collapse" data-parent="#faq2" href="#faq2_q4">*@CHEQUE INFORMATION@*</a>*@</h4>
+                </div>
+                <div id="faq2_q4">
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="block">
+                                    <!-- Normal Form Title -->
+                                    <div class="block-title">
+                                        <h2><strong>Cheque </strong> Details</h2>
+                                    </div>
+                                    <div class="form-horizontal form-bordered">
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <label for="example-nf-email">Cheque/Draft Number</label>
+                                                @Html.TextBoxFor(x => x.Jct_Dak_Register_Cheque.Cheque_No, new { @class = "form-control" })
+                                            </div>
+
+
+                                            <div class="col-md-3">
+                                                <label for="example-nf-email">Bank Name</label>
+                                                @Html.DropDownListFor(x => x.Jct_Dak_Register_Cheque.BankName, Model.DropDownViewModel.BankList, "Select BankName", new { @class = "form-control" })
+                                                @*@Html.TextBoxFor(x => x.Jct_Dak_Register_Cheque.BankName, new { })*@
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label for="example-nf-email">Amount</label>
+                                                @Html.TextBoxFor(x => x.Jct_Dak_Register_Cheque.Amount, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label for="example-nf-email">Payable At</label>
+                                                @Html.TextBoxFor(x => x.Jct_Dak_Register_Cheque.Payable_At, new { @class = "form-control" })
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div id="faq2_q434">
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="block">
+                                <!-- Normal Form Title -->
+                                <div class="block-title">
+                                    <h2><strong>Remarks </strong></h2>
+                                </div>
+                                <div class="form-horizontal form-bordered">
+                                    <div class="form-group">
+                                        <div class="col-md-6">
+                                            <label for="example-nf-email">Remarks</label>
+                                            @Html.TextAreaFor(x => x.Jct_Dak_Register.Remarks, new { @class = "form-control" })
+                                        </div>
+
+                                    </div>
+                                    <div class="pull-right">
+                                        <input id="Submit1" type="submit" value="Update" class="btn btn-primary" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+</div>
+}

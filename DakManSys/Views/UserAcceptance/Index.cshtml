@@ -1,0 +1,277 @@
+﻿@using MVCGrid.Web;
+
+
+<script src="~/Scripts/jquery-ui-1.10.2.js"></script>
+<link href="~/Content/jQuery%20UI-1.10.3.css" rel="stylesheet" />
+@*<script src="~/MVCGridHandler.axd/script.js"></script>*@
+
+<style type="text/css">
+    #MVCGridContainer_AcceptanceGrid > div {
+        overflow: auto;
+        width: 100% !important;
+    }
+
+    .label {
+        font-size: 88% !important;
+    }
+
+    .form-control.txtreplydate {
+        min-width: 88px !important;
+    }
+
+    .form-control.txtRemarks {
+        min-width: 200px;
+    }
+</style>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#modalclose").click(function () {
+            location.reload(true);
+
+
+        });
+
+        //Action checkbox All one shot
+        $(".checkall").on('click', function () {
+            if (this.checked) {
+                $(".chbbox").each(function () {
+
+                    this.checked = true;
+                    $(this).closest('td').siblings('td').eq(6).find('.chbreply').removeAttr("disabled");
+
+                    //var temp = $(this).val() + "," + $(this).closest('td').siblings('td').eq(3).html() + "~";
+
+
+
+
+                });
+            } else {
+                $(".chbbox").each(function () {
+                    this.checked = false;
+                    $(this).closest('td').siblings('td').eq(6).find('.chbreply').attr("disabled", true);
+                    //  $("#hdnValues").val("");
+
+                });
+            }
+
+        });
+        //-----------------End---------------------------//
+
+        //Action check or uncheck click for single chk
+        $(".chbbox").on('click', function () {
+
+            if ($(".chbbox:checked").length == $(".chbbox").length) {
+                $(".checkall").prop('checked', true);
+
+
+            } else {
+                $(".checkall").prop('checked', false);
+            }
+            if ($(this).prop('checked') == true) {
+
+                $(this).closest('td').siblings('td').eq(6).find('.chbreply').removeAttr("disabled");
+                //   var temp = $(this).val() + "," + $(this).closest('td').siblings('td').eq(3).html() + "~";
+
+
+            }
+            else {
+
+                $(this).closest('td').siblings('td').eq(6).find('.chbreply').attr("disabled", true);
+                $(".chbreply").parent().siblings('td').find('.txtreplydate').attr("disabled", true);
+                $(".chbreply").parent().siblings('td').find('.txtreplyreference').attr("disabled", true);
+            }
+        });
+
+        //----------------End----------------------------//
+
+        //Button Submit-------------------------
+        $("#btnrecieve").click(function () {
+
+            var data = {};
+
+            $(".chbbox:checked").each(function (index, item) {
+                var otherInputs = $(this).closest('td').siblings('td').eq(4).find('input');
+
+                if ($(this).closest('td').siblings('td').eq(6).find('input[type=checkbox]').prop('checked') == true) {
+                    data['myDictionary[' + index + '].Key'] = "Remarks";
+                    data['myDictionary[' + index + '].Value'] = $(this).val() + "," + $(otherInputs).val().replace(/,/g, ' ') + "," + $(this).closest('td').siblings('td').eq(7).find('input').val() + "," + $(this).closest('td').siblings('td').eq(8).find('input').val();
+                    $.ajax({
+                        url: '/UserAcceptance/UserAcceptReplySave',
+                        type: 'POST',
+                        data: data,
+                        success: function (result) {
+                            if (result == "Success")
+                            { MVCGrid.reloadGrid('AcceptanceGrid'); }
+                            else
+                            {
+                                $("#ResultModal").modal('show');
+                                $(".modal-body").html('');
+                                $(".modal-body").append("<a  href='' aria-hidden='true' id='myAlert'></a>");
+                                $(".modal-body").append($("<p class='alert alert-danger'></p>").html(result));
+                            }
+
+
+
+
+                        }
+                    });
+                }
+
+                else {
+                    data['myDictionary[' + index + '].Key'] = "Remarks";
+                    data['myDictionary[' + index + '].Value'] = $(this).val() + "," + $(otherInputs).val().replace(/,/g, ' ');
+                    $.ajax({
+
+                        url: '/UserAcceptance/UserAcceptSave',
+                        type: 'POST',
+                        data: data,
+                        success: function (result) {
+                            if (result == "Success")
+                            { MVCGrid.reloadGrid('AcceptanceGrid'); }
+                            else
+                            {
+                                $("#ResultModal").modal('show');
+                                $(".modal-body").html('');
+                                $(".modal-body").append("<a  href='' aria-hidden='true' id='myAlert'></a>");
+                                $(".modal-body").append($("<p class='alert alert-danger'></p>").html(result));
+                            }
+
+                        }
+                    });
+                }
+            });
+
+        });
+        //----------------End----------------------------//
+
+        //Checkbox reply action//
+
+        $(".chbreply").click(function () {
+
+            if ($(this).prop('checked') == true) {
+                $(this).parent().siblings('td').find('.txtreplydate').removeAttr("disabled");
+                $(this).parent().siblings('td').find('.txtreplyreference').removeAttr("disabled");
+            }
+            else {
+
+                $(this).parent().siblings('td').find('.txtreplydate').attr("disabled", true);
+                $(this).parent().siblings('td').find('.txtreplyreference').attr("disabled", true);
+
+            }
+
+
+        });
+        //------------------End--------------------------//
+
+
+        //DatePicker--------
+        $(".txtreplydate").datepicker({
+            maxDate: 'today',
+            dateFormat: 'm/d/yy',
+            autoclose: true,
+
+            onSelect: function (dateStr) {
+
+
+                var mydate = new Date($(this).val());
+
+                var letterDate = new Date($(this).parents().siblings('td').eq(4).html());
+                if (letterDate >= mydate) {
+                    alert("Date Should Be Less Then Lettert Date");
+
+                }
+                $(".txtreplydate").datepicker('hide');
+
+            }
+
+        });
+
+
+        //DatePicker----End Here----
+
+        $(".action").on('click',function (event) {
+            event.preventDefault();
+            var temp = $(this).html();
+            $.ajax({
+                url: '/UserAcceptance/Detail',
+                type: 'POST',
+                dataType: 'json',
+                data: { inwardNo: $(this).html(),flag:"Report" },
+                success: function (json) {
+                    if (json.isRedirect == true) {
+                        window.location.href = json.redirectUrl;
+                    }
+                }
+            });
+        });
+
+
+
+    });
+
+
+</script>
+
+
+<div id="page-content" style="min-height: 378px;">
+    <div class="content-header">
+        <div class="header-section">
+            <div class="row">
+                <div class="col-md-5 col-lg-6 hidden-sm">
+                    <h1>DAK ACCEPTANCE FORM</h1>
+                </div>
+            </div>
+        </div>
+        <!-- END Header -->
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><i class="fa fa-angle-right"></i>DAK ACCEPTANCE </h4>
+        </div>
+        <div id="faq2_q434">
+            <div class="panel-body">
+                <div class="col-md-12">
+                    @Html.Partial("_MVCGridToolbar", new DakManSys.Models.MVCGridToolbarModel()
+                                    {
+                                        MVCGridName = "AcceptanceGrid",
+                                        PageSize = true,
+                                        GlobalSearch = true
+
+                                    })
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.MVCGrid("AcceptanceGrid")
+                        </div>
+                    </div>
+                    <input type='button' class='btn btn-primary' value='Recieved' id='btnrecieve' />
+                    <input type="hidden" id="hdnValues" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="ResultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">ALERT</h2>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="modalclose" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+E:\DakManSys\DakManSys\bin\DakManSys.dll.config
+E:\DakManSys\DakManSys\bin\DakManSys.dll
+E:\DakManSys\DakManSys\bin\DakManSys.pdb
+E:\DakManSys\DakManSys\obj\Release\DakManSys.dll
+E:\DakManSys\DakManSys\obj\Release\DakManSys.pdb
+E:\DakManSys\DakManSys\obj\Release\DakManSys.csprojResolveAssemblyReference.cache

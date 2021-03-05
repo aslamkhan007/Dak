@@ -1,0 +1,24 @@
+E:\DakManSys\DakManSys\bin\DakManSys.dll.config
+E:\DakManSys\DakManSys\bin\DakManSys.dll
+E:\DakManSys\DakManSys\bin\DakManSys.pdb
+E:\DakManSys\DakManSys\obj\Debug\DakManSys.dll
+E:\DakManSys\DakManSys\obj\Debug\DakManSys.pdb
+E:\DakManSys\DakManSys\obj\Debug\DakManSys.csprojResolveAssemblyReference.cache
+Z:\MYPro\Dak Backup\DakManSys\DakManSys\bin\DakManSys.dll.config
+Z:\MYPro\Dak Backup\DakManSys\DakManSys\bin\DakManSys.dll
+Z:\MYPro\Dak Backup\DakManSys\DakManSys\bin\DakManSys.pdb
+Z:\MYPro\Dak Backup\DakManSys\DakManSys\obj\Debug\DakManSys.csprojResolveAssemblyReference.cache
+Z:\MYPro\Dak Backup\DakManSys\DakManSys\obj\Debug\DakManSys.dll
+Z:\MYPro\Dak Backup\DakManSys\DakManSys\obj\Debug\DakManSys.pdb
+C:\Users\aslam\Desktop\DakManSys1\DakManSys\bin\DakManSys.dll.config
+C:\Users\aslam\Desktop\DakManSys1\DakManSys\bin\DakManSys.dll
+C:\Users\aslam\Desktop\DakManSys1\DakManSys\bin\DakManSys.pdb
+C:\Users\aslam\Desktop\DakManSys1\DakManSys\obj\Debug\DakManSys.csprojResolveAssemblyReference.cache
+C:\Users\aslam\Desktop\DakManSys1\DakManSys\obj\Debug\DakManSys.dll
+C:\Users\aslam\Desktop\DakManSys1\DakManSys\obj\Debug\DakManSys.pdb
+C:\Users\aslam\Desktop\DakManSys\DakManSys\bin\DakManSys.dll.config
+C:\Users\aslam\Desktop\DakManSys\DakManSys\bin\DakManSys.dll
+C:\Users\aslam\Desktop\DakManSys\DakManSys\bin\DakManSys.pdb
+C:\Users\aslam\Desktop\DakManSys\DakManSys\obj\Debug\DakManSys.csprojResolveAssemblyReference.cache
+C:\Users\aslam\Desktop\DakManSys\DakManSys\obj\Debug\DakManSys.dll
+C:\Users\aslam\Desktop\DakManSys\DakManSys\obj\Debug\DakManSys.pdb

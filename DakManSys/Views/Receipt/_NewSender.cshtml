@@ -1,0 +1,155 @@
+﻿@model DakManSys.ViewModel.ParentViewModel
+
+<style>
+    label.error {
+        color: #b94a48;
+    }
+
+    select.error {
+        border: 1px solid #b94a48;
+    }
+
+    input.error {
+        border: 1px solid #b94a48;
+    }
+</style>
+
+<div id="faq2_q434">
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <!-- Normal Form Title -->
+                    <div class="block-title">
+                        <h2><strong>Add New Sender Details </strong></h2>
+                    </div>
+                    <div class="form-horizontal form-bordered">
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <label for="example-nf-email">Party Name</label>
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Header.Party_Name, new { @placeholder = "Enter Party Name", @id = "PartyName" , @class="form-control"})
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <label for="example-nf-email">Party Address</label>
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Address_Line_1, new { @id = "Address", @class = "form-control" })
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-5">
+
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Address_Line_2, new { @class = "form-control" })
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Address_Line_3, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        
+
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <label for="example-nf-email">Country</label>
+                                @Html.DropDownListFor(x => x.DropDownViewModel.Jct_Dak_Country.name, Model.DropDownViewModel.CountryList, new { @id = "ddlcountry", @class = "form-control" })
+                            </div>
+
+                            <div class="col-md-5">
+
+                                <label for="example-nf-email">State</label>
+                                @Html.DropDownListFor(x => x.Jct_Dak_Party_Detail_Address.State, Model.DropDownViewModel.StateList, "Select State", new { @id = "ddlstate", @class = "form-control" })
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.State, new { @id = "txtstate", @class = "form-control" })
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <label for="example-nf-email">City</label>
+
+                                @Html.DropDownListFor(x => x.Jct_Dak_Party_Detail_Address.City, Model.DropDownViewModel.CityList, "Select City", new { @id = "ddlcity", @class = "form-control" })
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.City, new { @id = "txtcity", @class = "form-control" })
+
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="example-nf-email">Zip No</label>
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Zip_No, new { @class = "form-control" })
+
+                            </div>
+
+                        </div>
+                        
+
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <label for="example-nf-email">Email</label>
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Email, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-5">
+                                <label for="example-nf-email">Phone Number</label>
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Phone_No, new { @class = "form-control" })
+                            </div>
+
+                            
+                        </div>
+
+                        
+
+
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <label for="example-nf-email">Telex Number</label>
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Telex_No, new { @class = "form-control" })
+                            </div>
+
+                            <div class="col-md-5">
+                                <label for="example-nf-email">Fax Number</label>
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Detail_Address.Fax_No, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <label for="example-nf-email">Referee Name</label>
+
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Header.Reference_Employee, new { @class = "form-control" })
+                            </div>
+
+
+                            <div class="col-md-5">
+                                <label for="example-nf-email">Referee Code</label>
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Header.Ex_Employee, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <label for="example-nf-email">Remarks</label>
+                                @Html.TextBoxFor(x => x.Jct_Dak_Party_Header.Remarks, new { @class = "form-control" })
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>

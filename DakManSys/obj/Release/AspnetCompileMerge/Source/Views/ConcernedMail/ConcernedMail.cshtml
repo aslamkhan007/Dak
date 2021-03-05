@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "ConcernedMail";
+}
+<style type="text/css">
+    .btn-group {
+        padding: 3px 33px 2px 2px;
+    }
+
+    .form-group {
+        padding: 1px 15px 3px 4px;
+    }
+
+    #MVCGridContainer_SendMail > div {
+        overflow: auto;
+        width: 100% !important;
+    }
+</style>
+<style>
+    div#spinner {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0%;
+        text-align: center;
+        z-index: 100;
+        overflow: auto;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+
+        //For showing the details of Dak No
+        $(".action").click(function (event) {
+            event.preventDefault();
+            var temp = $(this).html();
+            $.ajax({
+                url: '/UserAcceptance/Detail',
+                type: 'POST',
+                dataType: 'json',
+                data: { inwardNo: $(this).html(), flag: "Report" },
+                success: function (json) {
+                    if (json.isRedirect == true) {
+                        window.location.href = json.redirectUrl;
+                    }
+                }
+            });
+        });
+        //---------------------------------------------//
+
+        //for firing sending mail method
+
+        $("#btnsendmail").click(function () {
+            $("#spinner").fadeIn('fast');
+            $.ajax({
+
+                url: '/ConcernedMail/SendMail',
+                type: 'POST',
+                success: function (result) {
+                    MVCGrid.reloadGrid('SendConcernedMail');
+                },
+                complete: function () {
+                    $("#spinner").stop().fadeOut('fast');
+                }
+            });
+        });
+        //-------------------------------------------------//
+    });
+    </script>
+
+    <div id="page-content" style="min-height: 378px;">
+        <div class="content-header">
+            <div class="header-section">
+                <div class="row">
+                    <div class="col-md-5 col-lg-6 hidden-sm">
+                        <h1>Concerned Person Email Send</h1>
+                    </div>
+                </div>
+            </div>
+            <!-- END Header -->
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-angle-right"></i>Concerned Person Email</h4>
+            </div>
+
+            <div id="fa_awq434">
+
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        @Html.Partial("_MVCGridToolbar", new DakManSys.Models.MVCGridToolbarModel()
+                {
+                    MVCGridName = "SendConcernedMail",
+                    PageSize = true,
+                })
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.MVCGrid("SendConcernedMail")
+                            </div>
+                        </div>
+
+                    </div>
+                    <input type='button' class='btn btn-primary' value='Send Mails' id='btnsendmail' />
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    @*Ajax Laoding Modal------------------------------------------------------------------------------------------*@
+
+    <div id="spinner" style="background: rgba(0, 0, 0, 0.5) none no-repeat fixed center center;">
+
+        <img src="~/Content/images/ajax-loader.gif" alt="Please Wait............" style="margin-top: 30%; margin-right: 17%;" />
+    </div>
+    @*------------------------------------------------------------------------------------------------------------*@
+
+
+
+

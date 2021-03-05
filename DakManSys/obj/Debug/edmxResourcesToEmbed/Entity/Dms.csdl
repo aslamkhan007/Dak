@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DRSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Jct_Dak_BankMaster">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BankCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="BankName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Empcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Dated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Cities">
+    <Key>
+      <PropertyRef Name="city_id" />
+    </Key>
+    <Property Name="city_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="city_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="city_state" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Country">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_DeptMaster">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DEPTCODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="DEPTNAME" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+  </EntityType>
+  <EntityType Name="jct_Dak_Email">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Emp_Code" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="hod_code" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="Emp_Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="EMail_ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Itemtype">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Dak_Code" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="DakType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+    <Property Name="Empcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="Created_On" Type="DateTime" Precision="3" />
+    <Property Name="Created_Hostname" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Ip_Address" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="EffectiveFrom" Type="DateTime" Precision="3" />
+    <Property Name="EffectiveTo" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Party_Detail_Address">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Party_Type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Party_Code" Type="String" MaxLength="18" FixedLength="true" Unicode="false" />
+    <Property Name="address_id" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+    <Property Name="Address_Line_1" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Address_Line_2" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Address_Line_3" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Country" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Zip_No" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="Phone_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Telex_No" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Fax_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Dob" Type="DateTime" Precision="3" />
+    <Property Name="Created_On" Type="DateTime" Precision="3" />
+    <Property Name="Empcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="Created_Hostname" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Ip_Address" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Party_Header">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Party_Type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Party_Code" Type="String" MaxLength="18" FixedLength="true" Unicode="false" />
+    <Property Name="Party_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Created_On" Type="DateTime" Precision="3" />
+    <Property Name="Empcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="Created_Hostname" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Ip_Address" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Reference_Employee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Ex_Employee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Party_Sr_No">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PartyNo" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="Delimiter" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="EffectiveFrom" Type="DateTime" Precision="3" />
+    <Property Name="EffectiveTo" Type="DateTime" Precision="3" />
+    <Property Name="Empcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Dated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Register_Cheque">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Inward_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Cheque_No" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Cheque_Date" Type="DateTime" Precision="3" />
+    <Property Name="BankName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Payable_At" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Created_On" Type="DateTime" Precision="3" />
+    <Property Name="Empcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="Created_Hostname" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Ip_Address" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="jct_dak_role">
+    <Key>
+      <PropertyRef Name="Trans_No" />
+    </Key>
+    <Property Name="Trans_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleId" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Rolename" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="empcode" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Dept" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Service_Details">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ServiceMode_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DakService_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DakService_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+    <Property Name="Address_Line_1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Address_Line_2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Address_Line_3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="Email_Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Office_Number" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="FaxNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="WebSite" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="STDCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="Logo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Empcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="Created_On" Type="DateTime" Precision="3" />
+    <Property Name="Created_Hostname" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Ip_Address" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="EffectiveFrom" Type="DateTime" Precision="3" />
+    <Property Name="EffectiveTo" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Service_Mode">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ServiceMode_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ServiceMode_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Empcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="Created_On" Type="DateTime" Precision="3" />
+    <Property Name="Created_Hostname" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Ip_Address" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_State">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Type_Sr_No">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Area" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Prefix" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="StartNo" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="LastNo" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="Postfix" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="Delimiter" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="EffectiveFrom" Type="DateTime" Precision="3" />
+    <Property Name="EffectiveTo" Type="DateTime" Precision="3" />
+    <Property Name="Empcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Dated" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="JCT_EMP_HOD">
+    <Key>
+      <PropertyRef Name="Trans_No" />
+    </Key>
+    <Property Name="Trans_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Hod_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Hod_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Deptcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Mobile" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="E_MailID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Eff_From" Type="DateTime" Precision="3" />
+    <Property Name="Eff_To" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityContainer Name="DRSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Jct_Dak_BankMaster" EntityType="Self.Jct_Dak_BankMaster" />
+    <EntitySet Name="Jct_Dak_Cities" EntityType="Self.Jct_Dak_Cities" />
+    <EntitySet Name="Jct_Dak_Country" EntityType="Self.Jct_Dak_Country" />
+    <EntitySet Name="Jct_Dak_DeptMaster" EntityType="Self.Jct_Dak_DeptMaster" />
+    <EntitySet Name="jct_Dak_Email" EntityType="Self.jct_Dak_Email" />
+    <EntitySet Name="Jct_Dak_Itemtype" EntityType="Self.Jct_Dak_Itemtype" />
+    <EntitySet Name="Jct_Dak_Party_Detail_Address" EntityType="Self.Jct_Dak_Party_Detail_Address" />
+    <EntitySet Name="Jct_Dak_Party_Header" EntityType="Self.Jct_Dak_Party_Header" />
+    <EntitySet Name="Jct_Dak_Party_Sr_No" EntityType="Self.Jct_Dak_Party_Sr_No" />
+    <EntitySet Name="Jct_Dak_Register_Cheque" EntityType="Self.Jct_Dak_Register_Cheque" />
+    <EntitySet Name="jct_dak_role" EntityType="Self.jct_dak_role" />
+    <EntitySet Name="Jct_Dak_Service_Details" EntityType="Self.Jct_Dak_Service_Details" />
+    <EntitySet Name="Jct_Dak_Service_Mode" EntityType="Self.Jct_Dak_Service_Mode" />
+    <EntitySet Name="Jct_Dak_State" EntityType="Self.Jct_Dak_State" />
+    <EntitySet Name="Jct_Dak_Type_Sr_No" EntityType="Self.Jct_Dak_Type_Sr_No" />
+    <EntitySet Name="JCT_EMP_HOD" EntityType="Self.JCT_EMP_HOD" />
+    <EntitySet Name="Jct_Dak_Register" EntityType="DRSModel.Jct_Dak_Register" />
+    <EntitySet Name="Jct_Dak_Register_Recieved" EntityType="DRSModel.Jct_Dak_Register_Recieved" />
+    <EntitySet Name="JCT_EMP_HOD_Dept" EntityType="DRSModel.JCT_EMP_HOD_Dept" />
+  </EntityContainer>
+  <EntityType Name="Jct_Dak_Register">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Dak_Code" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Dak_Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Inward_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ReferenceNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Reference_Date" Type="DateTime" Precision="3" />
+    <Property Name="Party_Code" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Dept_Code" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Hod_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Phone_No" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+    <Property Name="MailTo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="DakService_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DakService_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SUBJECT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ConcernedPersonals" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Attached_File" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Name="Empcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="Created_On" Type="DateTime" Precision="3" />
+    <Property Name="Created_Hostname" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Ip_Address" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DakService_Mode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Department" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="PartyAddress_id" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+    <Property Name="Email_Status" Type="Boolean" Nullable="false" />
+    <Property Name="Party_Type" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Jct_Dak_Register_Recieved">
+    <Key>
+      <PropertyRef Name="TransNo" />
+    </Key>
+    <Property Name="TransNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Inward_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Received_Status" Type="Boolean" Nullable="false" />
+    <Property Name="Reply_ReferenceNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Reply_ReferenceDate" Type="DateTime" Precision="3" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Created_On" Type="DateTime" Precision="3" />
+    <Property Name="Empcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+    <Property Name="Created_Hostname" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Ip_Address" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Email_Status" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="JCT_EMP_HOD_Dept">
+    <Key>
+      <PropertyRef Name="Trans_No" />
+    </Key>
+    <Property Name="Trans_No" Type="Int32" Nullable="false" />
+    <Property Name="Hod_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Hod_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Deptcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Mobile" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="E_MailID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="Flag" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Eff_From" Type="DateTime" Precision="3" />
+    <Property Name="Eff_To" Type="DateTime" Precision="3" />
+  </EntityType>
+</Schema>

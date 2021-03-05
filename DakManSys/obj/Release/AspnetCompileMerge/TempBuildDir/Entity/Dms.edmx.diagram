@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="48475bd291ae4368b6422d529f1be2c0" Name="Diagram1">
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_BankMaster" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_Cities" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_Country" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_DeptMaster" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.jct_Dak_Email" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_Itemtype" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_Party_Detail_Address" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_Party_Header" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_Party_Sr_No" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_Register_Cheque" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.jct_dak_role" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_Service_Details" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_Service_Mode" Width="1.5" PointX="4.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_State" Width="1.5" PointX="10.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_Type_Sr_No" Width="1.5" PointX="10.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.JCT_EMP_HOD" Width="1.5" PointX="6.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_Register" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="DRSModel.Jct_Dak_Register_Recieved" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DRSModel.JCT_EMP_HOD_Dept" Width="1.5" PointX="13.375" PointY="4.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

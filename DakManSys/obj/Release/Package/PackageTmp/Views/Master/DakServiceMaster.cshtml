@@ -1,0 +1,267 @@
+﻿@model DakManSys.ViewModel.ParentViewModel
+@{
+    ViewBag.Title = "DakServiceMaster";
+}
+<script src="~/Scripts/jquery.validate.js"></script>
+<style>
+    #DakServiceDetails label.error {
+        color: #b94a48;
+    }
+
+    #DakServiceDetails select.error {
+        border: 1px solid #b94a48;
+    }
+
+    #DakServiceDetails input.error {
+        border: 1px solid #b94a48;
+    }
+    #Textarea {
+        width: 473px !important;
+        height: 60px !important;
+        max-width: 100% !important;
+    }
+
+    #Jct_Dak_Register_Remarks {
+        max-width: 100%;
+        width: 70%;
+    }
+
+    #ui-id-1 {
+        height: 30% !important;
+        overflow: scroll !important;
+    }
+
+    input text {
+        max-width: 150px !important;
+        width: 150px !important;
+    }
+
+
+    #txtAddress2 {
+        margin-top: 14%;
+    }
+
+    #txtAddress3 {
+        margin-top: 14%;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+
+        $("#DakServiceDetails").validate();
+
+        $("#ServiceType").rules("add", { required: true, messages: { required: "Select the Service Type" } });
+        $("#ServiceName").rules("add", { required: true, messages: { required: "Enter Service Name" } });
+    });
+
+</script>
+@using (Html.BeginForm("DakServiceMaster", "Master", FormMethod.Post, new { @id="DakServiceDetails"}))
+{
+    <div id="page-content" style="min-height: 378px;">
+        <div class="content-header">
+            <div class="header-section">
+                <div class="row">
+                    <div class="col-md-5 col-lg-6 hidden-sm">
+                        <h1>Dak Service Master</h1>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="child">
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="row">
+                        @Html.ValidationSummary(true)
+                        <div class="col-md-3">
+                            <label for="example-nf-email">Dak Mode</label>
+                                                        @Html.DropDownListFor(x => x.DakServiceModel.ServiceMode_Code, Model.DropDownViewModel.DakServiceModeList, "Select Dak Mode", new { @class = "form-control", @id = "ServiceType" })
+                            @*<input type="text" value="Ordinary" name="Jct_Dak_Register.Dak_Type" id="Dak_Type" disabled="True" class="form-control">*@
+                        </div>
+
+                        @*<div class="col-md-3">
+                            <label for="example-nf-email">Dak ServiceName</label>
+                            @Html.TextBoxFor(x => x.DakService_Name, new { @class = "form-control" })
+                            @*<input type="text" value="DAK/000055/2016" name="Jct_Dak_Register.Inward_No" id="Dak_Type" disabled="True" class="form-control">*@
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block">
+                            <!-- Normal Form Title -->
+                            <div class="block-title">
+                                <h2><strong>DAK Service</strong>Details</h2>
+                            </div>
+
+
+                            <div class="form-horizontal form-bordered">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <label for="example-nf-email">Dak Service Name</label>
+
+                                        @Html.TextBoxFor(x => x.DakServiceModel.DakService_Name, new { @class = "form-control", @id = "ServiceName" })
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <label for="example-nf-email">Service Address</label>
+                                        @Html.TextBoxFor(x => x.DakServiceModel.Address_Line_1, new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="col-md-3">
+
+                                        <label for="example-nf-email">Country</label>
+                                        @Html.TextBoxFor(x => x.DakServiceModel.Country, new { @class = "form-control" })
+                                        @*<input type="text" value="INDIA" name="Jct_Dak_Party_Detail_Address.Country" id="txtCountry" disabled="True" class="form-control">*@
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="example-nf-email">State</label>
+                                        @Html.TextBoxFor(x => x.DakServiceModel.State, new { @class = "form-control" })
+                                        @*<input type="text" value="WEST BENGAL" name="Jct_Dak_Party_Detail_Address.State" id="txtState" disabled="True" class="form-control">*@
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="example-nf-email">  City</label>
+                                        @*<input type="text" value="KOLKATA" name="Jct_Dak_Party_Detail_Address.City" id="txtCity" disabled="True" class="form-control">*@
+                                        @Html.TextBoxFor(x => x.DakServiceModel.city, new { @class = "form-control" })
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <div class="col-md-3">
+                                        @Html.TextBoxFor(x => x.DakServiceModel.Address_Line_2, new { @id = "txtAddress2", @class = "form-control" })
+                                        @*<input type="text" value="ROOM NO 605" name="Jct_Dak_Party_Detail_Address.Address_Line_2" id="txtAddress2" disabled="True" class="form-control">*@
+
+
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="example-nf-email">  Zip</label>
+                                        @Html.TextBoxFor(x => x.DakServiceModel.ZipCode, new { @class = "form-control" })
+                                        @*<input type="text" value="" name="Jct_Dak_Party_Detail_Address.Zip_No" id="txtZip" disabled="True" class="form-control">*@
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="example-nf-email">  Phone Number</label>
+                                        @*<input type="text" value="" name="Jct_Dak_Party_Detail_Address.Phone_No" id="txtPhone" disabled="True" class="form-control">*@
+                                        @Html.TextBoxFor(x => x.DakServiceModel.PhoneNo, new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="example-nf-email"> Fax</label>
+                                        @*<input type="text" value="" name="Jct_Dak_Party_Detail_Address.Fax_No" id="txtFax" disabled="True" class="form-control">*@
+                                        @Html.TextBoxFor(x => x.DakServiceModel.Fax_Number, new { @class = "form-control" })
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        @*<input type="text" value="DES.TO BHILWARA" name="Jct_Dak_Party_Detail_Address.Address_Line_3" id="txtAddress3" disabled="True" class="form-control">*@
+                                        @Html.TextBoxFor(x => x.DakServiceModel.Address_line_3, new { @id = "txtAddress2", @class = "form-control" })
+                                    </div>
+
+
+                                    <div class="col-md-3">
+                                        <label for="example-nf-email">
+                                            Office Number
+                                        </label>
+
+                                        @*<input type="text" value="" name="Jct_Dak_Party_Detail_Address.Telex_No" id="txtTelex" disabled="True" class="form-control">*@
+                                        @Html.TextBoxFor(x => x.DakServiceModel.Office_Number, new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="example-nf-email">
+                                            Email
+                                        </label>
+
+                                        @*<input type="text" value="" name="Jct_Dak_Party_Detail_Address.Email" id="txtEmail" disabled="True" class="form-control">*@
+
+                                        @Html.TextBoxFor(x => x.DakServiceModel.Email_Address, new { @class = "form-control" })
+
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block">
+                            <!-- Normal Form Title -->
+                            <div class="block-title">
+                                <h2><strong>Description</h2>
+                            </div>
+                            <div class="form-horizontal form-bordered">
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <label for="example-nf-email">
+                                            Description
+                                        </label>
+                                        @Html.TextAreaFor(x => x.DakServiceModel.Description, new { @class = "form-control" })
+                                        @*<textarea rows="2" name="Jct_Dak_Register.Remarks" id="Jct_Dak_Register_Remarks" disabled="True" cols="20" class="form-control">TEst</textarea>
+                                            <input type="text" value="Test" name="Jct_Dak_Register.ReferenceNo" id="Jct_Dak_Register_ReferenceNo" disabled="True" class="form-control">*@
+                                    </div>
+
+
+                                    <div class="col-md-3">
+                                        <label for="example-nf-email">
+                                            Website
+                                        </label>
+
+                                        @*<input type="text" value="DHL" name="Jct_Dak_Register.DakService_Type" id="MailMode" disabled="True" class="form-control">*@
+                                        @Html.TextBoxFor(x => x.DakServiceModel.Website, new { @class = "form-control" })
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="faq2_q434">
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <!-- Normal Form Title -->
+
+
+
+                                <div class="pull-right">
+                                    <input id="Submit1" type="submit" value="submit" class="btn btn-primary" />
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
